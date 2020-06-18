@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:title="@string/home"
+        android:id="@+id/menu_home"/>
+
+    <item android:title="@string/add_new_item"
+        android:id="@+id/menu_items"
+        />
+
+    <item android:title="@string/employees_stock"
+        android:id="@+id/menu_employees_stock"
+        />
+    <item android:title="@string/manage_employees"
+        android:id="@+id/menu_manage"
+        />
+</menu>

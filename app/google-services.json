@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "365669881759",
+    "firebase_url": "https://rpstock-b9f28.firebaseio.com",
+    "project_id": "rpstock-b9f28",
+    "storage_bucket": "rpstock-b9f28.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365669881759:android:d950a0c22f75bd4c050faa",
+        "android_client_info": {
+          "package_name": "com.example.rpstock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365669881759-jm67a555qm3rt5nkdingr6v6v4c0ssv9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtQgb9vP5szoFmGuzPtXEfL_bE_Nq-6j8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365669881759-jm67a555qm3rt5nkdingr6v6v4c0ssv9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
