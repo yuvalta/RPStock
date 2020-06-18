@@ -87,10 +87,6 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
 
-//                                SharedPreferences.Editor e = sharedPreferences.edit();
-//                                e.putString("username", user.getEmail());
-//                                e.apply();
-
                                 updateUI(user);
 
                             } else {

@@ -5,8 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".ItemsListFragment">
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:background="@android:color/darker_gray"
+        android:scrollbars="vertical"
+        android:id="@+id/items_recycler_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

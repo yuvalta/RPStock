@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
+    private DatabaseReference mDatabase;
+
+
+    private FirebaseDatabase database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +42,14 @@ public class MainActivity extends AppCompatActivity {
 
         startFragmentRoutine();
 
+        database = FirebaseDatabase.getInstance();
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         userEmail = currentUser.getEmail();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-
 
         userNameTV = findViewById(R.id.user_name);
 
@@ -67,31 +76,39 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
-            case R.id.menu_home:
+            case R.id.menu_home: {
 
-                if (checkIfFragmentExist("home")) {
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(), "home").commit();
-                }
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(), "home").commit();
 
                 return true;
+            }
 
-            case R.id.menu_manage:
-                if (checkIfFragmentExist("manage_employees")) {
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_frame, new ManageEmployeesFragment(), "manage_employees").commit();
-                }
-                return true;
-
-            case R.id.menu_items:
+            case R.id.menu_manage: {
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_frame, new ManageEmployeesFragment(), "manage_employees").commit();
 
                 return true;
+            }
 
-            case R.id.menu_employees_stock:
+            case R.id.menu_items: {
 
                 return true;
+            }
+            case R.id.menu_employees_stock: {
 
+                return true;
+            }
+
+            case R.id.log_out: {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
             default:
 
                 return super.onOptionsItemSelected(item);
@@ -99,13 +116,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private boolean checkIfFragmentExist(String tag) {
-        Fragment fragmentA = fragmentManager.findFragmentByTag(tag);
-
-        if (fragmentA == null) {
-            return true;
-        } else {
-            return false;
-        }
+    public FirebaseDatabase getDatabase() {
+        return database;
     }
 }

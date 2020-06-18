@@ -109,4 +109,11 @@
         android:indeterminate="true"
         android:id="@+id/progressbar" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/signin_button"
+        android:layout_marginTop="10dp"
+        android:id="@+id/employees_list" />
+
 </RelativeLayout>

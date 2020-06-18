@@ -4,8 +4,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 
 /**
@@ -42,8 +49,20 @@ public class ManageEmployeesFragment extends Fragment {
     private Button signinButton;
     private ProgressBar progressBar;
 
+    private RecyclerView employessList;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
     private FirebaseAuth mAuth;
 
+    private DatabaseReference mDatabase;
+
+    private ArrayList<Employee> employeeArrayList = new ArrayList<>();
+
+
+    public ArrayList<Employee> getEmployeeArrayList() {
+        return employeeArrayList;
+    }
 
     public ManageEmployeesFragment() {
         // Required empty public constructor
@@ -78,10 +97,53 @@ public class ManageEmployeesFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progressbar);
         signinButton.setOnClickListener(signInClick);
+        employessList = view.findViewById(R.id.employees_list);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        getListFromDB();
 
         return view;
+    }
+
+    private void getListFromDB() {
+        progressBar.setVisibility(View.VISIBLE);
+        mDatabase.child("users");
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    for (DataSnapshot ds1 : ds.getChildren()) {
+                        Employee e = new Employee();
+                        e.setName(ds1.child("name").getValue(String.class));
+                        e.setEmail(ds1.child("email").getValue(String.class));
+                        e.setPassword(ds1.child("password").getValue(String.class));
+                        employeeArrayList.add(e);
+                    }
+                }
+                inflateEmployeesList();
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getContext(), "Error in loading", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+    private void inflateEmployeesList() {
+        employessList.setHasFixedSize(true);
+
+        // use a linear layout manager
+        layoutManager = new LinearLayoutManager(getContext());
+        employessList.setLayoutManager(layoutManager);
+
+        // specify an adapter (see also next example)
+        mAdapter = new EmployeesAdapter(employeeArrayList);
+        employessList.setAdapter(mAdapter);
     }
 
     View.OnClickListener signInClick = new View.OnClickListener() {
@@ -89,13 +151,22 @@ public class ManageEmployeesFragment extends Fragment {
         public void onClick(View v) {
             progressBar.setVisibility(View.VISIBLE);
 
-            mAuth.createUserWithEmailAndPassword(emailET.getText().toString(), passwordET.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            final Employee newEmployee = new Employee(nameET.getText().toString(),
+                    emailET.getText().toString(),
+                    passwordET.getText().toString());
+
+            mAuth.createUserWithEmailAndPassword(newEmployee.getEmail(),
+                    newEmployee.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+
+                    mDatabase.child("users").child(String.valueOf(mAuth.getUid())).setValue(newEmployee);
+
+                    FirebaseAuth.getInstance().signOut();
+
                     progressBar.setVisibility(View.INVISIBLE);
                 }
             });
-
 
 
         }

@@ -3,9 +3,9 @@
 
 
     <item android:title="@string/home"
-        android:id="@+id/nav_item_home"/>
+        android:id="@+id/menu_home"/>
 
     <item android:title="@string/log_out"
-        android:id="@+id/nav_item_item"
+        android:id="@+id/log_out"
         />
 </menu>
