@@ -116,6 +116,7 @@ public class ManageEmployeesFragment extends Fragment {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                employeeArrayList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     for (DataSnapshot ds1 : ds.getChildren()) {
                         Employee e = new Employee();
@@ -139,12 +140,17 @@ public class ManageEmployeesFragment extends Fragment {
     }
 
     private void inflateEmployeesList() {
+
         employessList.setHasFixedSize(true);
 
-        layoutManager = new LinearLayoutManager(getContext());
+        if (layoutManager == null) {
+            layoutManager = new LinearLayoutManager(getContext());
+        }
         employessList.setLayoutManager(layoutManager);
 
-        mAdapter = new EmployeesAdapter(employeeArrayList);
+        if (mAdapter == null) {
+            mAdapter = new EmployeesAdapter(employeeArrayList);
+        }
         employessList.setAdapter(mAdapter);
     }
 
