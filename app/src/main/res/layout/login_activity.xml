@@ -8,10 +8,12 @@
 
 
     <LinearLayout
-        android:layout_margin="5dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginHorizontal="5dp"
         android:weightSum="3.3"
         android:id="@+id/enter_email_LL"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

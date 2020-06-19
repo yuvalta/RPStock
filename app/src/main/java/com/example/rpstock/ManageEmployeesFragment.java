@@ -27,19 +27,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ManageEmployeesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ManageEmployeesFragment extends Fragment {
-
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
 
     private String mParam1;
     private String mParam2;
@@ -61,7 +54,6 @@ public class ManageEmployeesFragment extends Fragment {
     private DatabaseReference mDatabase;
 
     private ArrayList<Employee> employeeArrayList = new ArrayList<>();
-
 
     public ArrayList<Employee> getEmployeeArrayList() {
         return employeeArrayList;
@@ -159,7 +151,8 @@ public class ManageEmployeesFragment extends Fragment {
         public void onClick(View v) {
             progressBar.setVisibility(View.VISIBLE);
 
-            final Employee newEmployee = new Employee(nameET.getText().toString(),
+            final Employee newEmployee = new Employee(UUID.randomUUID().toString()
+                    ,nameET.getText().toString(),
                     emailET.getText().toString(),
                     passwordET.getText().toString(),
                     phoneET.getText().toString(),
@@ -170,7 +163,7 @@ public class ManageEmployeesFragment extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    mDatabase.child("users").child(mAuth.getUid()).setValue(newEmployee);
+                    mDatabase.child("users").child(newEmployee.getID()).setValue(newEmployee);
 
                     FirebaseAuth.getInstance().signOut();
 

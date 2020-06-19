@@ -1,21 +1,24 @@
 package com.example.rpstock;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -31,7 +34,10 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
-    private DatabaseReference mDatabase;
+    Query query;
+    Employee currentEmployeeUser;
+
+    private DatabaseReference usersDatabaseRef;
     private FirebaseUser currentUser;
 
     private FirebaseDatabase database;
@@ -49,17 +55,55 @@ public class MainActivity extends AppCompatActivity {
         currentUser = mAuth.getCurrentUser();
         userEmail = currentUser.getEmail();
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+
+        getCurrentUserDataFromDB();
 
         userNameTV = findViewById(R.id.user_name);
+    }
 
-        userNameTV.setText(userEmail);
+    private void getCurrentUserDataFromDB() {
+        usersDatabaseRef = database.getReference("users");
+        usersDatabaseRef.orderByChild("email").equalTo(userEmail).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                if (dataSnapshot != null) {
+                    currentEmployeeUser = dataSnapshot.getValue(Employee.class);
+                    userNameTV.setText("Hi " + currentEmployeeUser.getName());
+                }
+                else {
+                    currentEmployeeUser = new Employee();
+                    currentEmployeeUser.setAdmin(true);
+                }
+
+                Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+                setSupportActionBar(myToolbar);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (userEmail.equals(ADMIN_EMAIL)) {
+
+        if (currentEmployeeUser.isAdmin() || currentUser.equals(ADMIN_EMAIL)) {
             getMenuInflater().inflate(R.menu.admin_menu, menu);
         } else {
             getMenuInflater().inflate(R.menu.employee_menu, menu);
@@ -104,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             case R.id.log_out: {
+                currentEmployeeUser = null;
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -111,9 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
             default:
-
                 return super.onOptionsItemSelected(item);
-
         }
     }
 

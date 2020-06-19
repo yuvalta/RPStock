@@ -2,21 +2,33 @@ package com.example.rpstock;
 
 public class Employee {
 
+
+
+    private String ID;
     private String name;
     private String email;
     private String password;
     private String phone;
-    private boolean isAdmin;
+    private boolean isAdmin = false;
 
     public Employee() {
     }
 
-    public Employee(String _name, String _email, String _password, String _phone, boolean _is_admin) {
+    public Employee(String _ID, String _name, String _email, String _password, String _phone, boolean _is_admin) {
+        this.ID = _ID;
         this.name = _name;
         this.email = _email;
         this.password = _password;
         this.phone = _phone;
         this.isAdmin = _is_admin;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getName() {
