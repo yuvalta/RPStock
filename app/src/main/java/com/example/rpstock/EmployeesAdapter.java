@@ -81,9 +81,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
                                     });
                                     return true;
                                 case R.id.menu_update:
-                                    final Dialog dialog = new Dialog(itemView.getContext());
-                                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                    dialog.setContentView(R.layout.user_layout);
+                                    UserInfoDialog dialog = new UserInfoDialog(itemView.getContext(), item);
                                     dialog.show();
 
                                     return true;

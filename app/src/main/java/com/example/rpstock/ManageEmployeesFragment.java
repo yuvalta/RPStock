@@ -62,7 +62,6 @@ public class ManageEmployeesFragment extends Fragment {
     public ManageEmployeesFragment() {
     }
 
-
     public static ManageEmployeesFragment newInstance(String param1, String param2) {
         ManageEmployeesFragment fragment = new ManageEmployeesFragment();
         Bundle args = new Bundle();
@@ -130,7 +129,6 @@ public class ManageEmployeesFragment extends Fragment {
     }
 
     private void inflateEmployeesList() {
-
         employessList.setHasFixedSize(true);
 
         if (layoutManager == null) {
@@ -150,7 +148,7 @@ public class ManageEmployeesFragment extends Fragment {
             progressBar.setVisibility(View.VISIBLE);
 
             final Employee newEmployee = new Employee(UUID.randomUUID().toString()
-                    ,nameET.getText().toString(),
+                    , nameET.getText().toString(),
                     emailET.getText().toString(),
                     passwordET.getText().toString(),
                     phoneET.getText().toString(),
@@ -168,8 +166,6 @@ public class ManageEmployeesFragment extends Fragment {
                     progressBar.setVisibility(View.INVISIBLE);
                 }
             });
-
-
         }
     };
 
