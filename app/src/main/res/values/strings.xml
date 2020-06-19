@@ -15,4 +15,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="enter_name">Enter Name:</string>
     <string name="name">Name</string>
+    <string name="admin">Admin</string>
+    <string name="add_user">Add user</string>
+    <string name="enter_phone">Enter Phone:</string>
+    <string name="phone">Phone</string>
 </resources>

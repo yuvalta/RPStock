@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -46,7 +47,9 @@ public class ManageEmployeesFragment extends Fragment {
     private EditText emailET;
     private EditText passwordET;
     private EditText nameET;
+    private EditText phoneET;
     private Button signinButton;
+    private CheckBox isAdminCB;
     private ProgressBar progressBar;
 
     private RecyclerView employessList;
@@ -65,7 +68,6 @@ public class ManageEmployeesFragment extends Fragment {
     }
 
     public ManageEmployeesFragment() {
-        // Required empty public constructor
     }
 
 
@@ -93,7 +95,9 @@ public class ManageEmployeesFragment extends Fragment {
         emailET = view.findViewById(R.id.enter_email_ET);
         passwordET = view.findViewById(R.id.enter_password_ET);
         nameET = view.findViewById(R.id.enter_name_ET);
+        phoneET = view.findViewById(R.id.enter_phone_ET);
         signinButton = view.findViewById(R.id.signin_button);
+        isAdminCB = view.findViewById(R.id.is_admin_CB);
 
         progressBar = view.findViewById(R.id.progressbar);
         signinButton.setOnClickListener(signInClick);
@@ -137,11 +141,9 @@ public class ManageEmployeesFragment extends Fragment {
     private void inflateEmployeesList() {
         employessList.setHasFixedSize(true);
 
-        // use a linear layout manager
         layoutManager = new LinearLayoutManager(getContext());
         employessList.setLayoutManager(layoutManager);
 
-        // specify an adapter (see also next example)
         mAdapter = new EmployeesAdapter(employeeArrayList);
         employessList.setAdapter(mAdapter);
     }
@@ -153,14 +155,16 @@ public class ManageEmployeesFragment extends Fragment {
 
             final Employee newEmployee = new Employee(nameET.getText().toString(),
                     emailET.getText().toString(),
-                    passwordET.getText().toString());
+                    passwordET.getText().toString(),
+                    phoneET.getText().toString(),
+                    isAdminCB.isChecked());
 
             mAuth.createUserWithEmailAndPassword(newEmployee.getEmail(),
                     newEmployee.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    mDatabase.child("users").child(String.valueOf(mAuth.getUid())).setValue(newEmployee);
+                    mDatabase.child("users").child(newEmployee.getPhone()).setValue(newEmployee);
 
                     FirebaseAuth.getInstance().signOut();
 
