@@ -111,10 +111,8 @@ public class ManageEmployeesFragment extends Fragment {
                 employeeArrayList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     for (DataSnapshot ds1 : ds.getChildren()) {
-                        Employee e = new Employee();
-                        e.setName(ds1.child("name").getValue(String.class));
-                        e.setEmail(ds1.child("email").getValue(String.class));
-                        e.setPassword(ds1.child("password").getValue(String.class));
+                        Employee e = ds1.getValue(Employee.class);
+
                         employeeArrayList.add(e);
                     }
                 }
