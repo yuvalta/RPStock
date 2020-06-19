@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction fragmentTransaction;
 
     private DatabaseReference mDatabase;
-
+    private FirebaseUser currentUser;
 
     private FirebaseDatabase database;
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        currentUser = mAuth.getCurrentUser();
         userEmail = currentUser.getEmail();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);

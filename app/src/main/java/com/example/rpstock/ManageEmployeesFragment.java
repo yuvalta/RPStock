@@ -164,7 +164,7 @@ public class ManageEmployeesFragment extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    mDatabase.child("users").child(newEmployee.getPhone()).setValue(newEmployee);
+                    mDatabase.child("users").child(mAuth.getUid()).setValue(newEmployee);
 
                     FirebaseAuth.getInstance().signOut();
 
