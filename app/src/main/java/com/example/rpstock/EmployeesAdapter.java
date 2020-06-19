@@ -1,9 +1,12 @@
 package com.example.rpstock;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
@@ -78,6 +81,10 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
                                     });
                                     return true;
                                 case R.id.menu_update:
+                                    final Dialog dialog = new Dialog(itemView.getContext());
+                                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                    dialog.setContentView(R.layout.user_layout);
+                                    dialog.show();
 
                                     return true;
                                 default:
