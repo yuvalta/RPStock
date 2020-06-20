@@ -16,21 +16,50 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rpstock.Objects.Employee;
 import com.example.rpstock.R;
 import com.example.rpstock.UserInfoDialog;
+import com.example.rpstock.UserStockDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyViewHolder> {
+public class AdminMainAdapter extends RecyclerView.Adapter<AdminMainAdapter.MyViewHolder> {
+
     private ArrayList<Employee> mDataset;
     private AdapterView.OnItemClickListener listener;
 
+    public AdminMainAdapter(ArrayList<Employee> employeeArrayList) {
+        mDataset = employeeArrayList;
+    }
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View listItem = layoutInflater.inflate(R.layout.employee_item_items, parent, false);
+
+        AdminMainAdapter.MyViewHolder vh = new AdminMainAdapter.MyViewHolder(listItem);
+        return vh;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        holder.bind(mDataset.get(position), position);
+    }
+
+    @Override
+    public int getItemCount() {
+        if (mDataset != null) {
+            return mDataset.size();
+        } else {
+            return 0;
+        }
+
+    }
+
     public static class MyViewHolder extends RecyclerView.ViewHolder {
+
         public TextView name, password, email, phone;
         public ImageButton options;
 
@@ -53,7 +82,8 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Toast.makeText(v.getContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
+                    UserStockDialog dialog = new UserStockDialog(itemView.getContext());
+                    dialog.show();
                     return false;
                 }
             });
@@ -96,35 +126,6 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
                     popup.show();
                 }
             });
-        }
-    }
-
-    public EmployeesAdapter(ArrayList<Employee> employeeArrayList) {
-        mDataset = employeeArrayList;
-    }
-
-    @Override
-    public EmployeesAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                            int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View listItem = layoutInflater.inflate(R.layout.employee_item, parent, false);
-
-        MyViewHolder vh = new MyViewHolder(listItem);
-        return vh;
-    }
-
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.bind(mDataset.get(position), position);
-    }
-
-
-    @Override
-    public int getItemCount() {
-        if (mDataset != null) {
-            return mDataset.size();
-        } else {
-            return 0;
         }
     }
 }

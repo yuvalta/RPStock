@@ -127,8 +127,6 @@ public class ManageEmployeesFragment extends Fragment {
                 Toast.makeText(getContext(), "Error in loading", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     private void inflateEmployeesList() {

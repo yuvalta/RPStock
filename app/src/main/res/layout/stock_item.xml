@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <TextView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/increase_amount"
+        app:layout_constraintHorizontal_weight="3"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/name_of_item" />
+
+    <Button
+        app:layout_constraintStart_toEndOf="@id/name_of_item"
+        app:layout_constraintEnd_toStartOf="@id/amount"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/increase_amount" />
+
+    <EditText
+        app:layout_constraintStart_toEndOf="@id/increase_amount"
+        app:layout_constraintEnd_toStartOf="@id/decrease_amount"
+        android:clickable="false"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/amount" />
+
+    <Button
+        app:layout_constraintStart_toEndOf="@id/amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/decrease_amount" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

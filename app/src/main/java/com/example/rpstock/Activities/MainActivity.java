@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.rpstock.Fragments.AdminMainFragment;
 import com.example.rpstock.Objects.Employee;
 import com.example.rpstock.Fragments.ItemsListFragment;
 import com.example.rpstock.Fragments.ManageEmployeesFragment;
@@ -57,14 +58,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startFragmentRoutine();
+
 
         database = FirebaseDatabase.getInstance();
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         userEmail = currentUser.getEmail();
-
 
         getCurrentUserDataFromDB();
 
@@ -132,17 +132,24 @@ public class MainActivity extends AppCompatActivity {
 
         if (currentEmployeeUser.isAdmin() || currentUser.equals(ADMIN_EMAIL)) {
             getMenuInflater().inflate(R.menu.admin_menu, menu);
+            startFragmentRoutine(true);
         } else {
             getMenuInflater().inflate(R.menu.employee_menu, menu);
+            startFragmentRoutine(false);
         }
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void startFragmentRoutine() {
+    private void startFragmentRoutine(boolean isAdmin) {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(), "home");
+        if (isAdmin) {
+            fragmentTransaction.replace(R.id.fragment_frame, new AdminMainFragment(), "home");
+        }
+        else {
+            fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(), "home");
+        }
         fragmentTransaction.commit();
     }
 
@@ -150,10 +157,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.menu_home: {
+            case R.id.menu_home_user: {
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(), "home").commit();
+
+                return true;
+            }
+            case R.id.menu_home_admin: {
+
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_frame, new AdminMainFragment(), "admin_home").commit();
 
                 return true;
             }

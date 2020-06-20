@@ -20,10 +20,8 @@ public class ItemsListFragment extends Fragment {
 
 
     public ItemsListFragment() {
-        // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static ItemsListFragment newInstance(String param1, String param2) {
         ItemsListFragment fragment = new ItemsListFragment();
         Bundle args = new Bundle();

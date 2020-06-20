@@ -4,7 +4,7 @@
 
     <item
         android:title="@string/home"
-        android:id="@+id/menu_home" />
+        android:id="@+id/menu_home_admin" />
 
     <item
         android:title="@string/add_new_item"
