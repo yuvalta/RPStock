@@ -1,20 +1,15 @@
-package com.example.rpstock;
+package com.example.rpstock.Fragments;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.rpstock.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ItemsListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ItemsListFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
@@ -24,19 +19,10 @@ public class ItemsListFragment extends Fragment {
     private String mParam2;
 
 
-
     public ItemsListFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ItemsListFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static ItemsListFragment newInstance(String param1, String param2) {
         ItemsListFragment fragment = new ItemsListFragment();
@@ -62,6 +48,4 @@ public class ItemsListFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_items_list, container, false);
     }
-
-
 }

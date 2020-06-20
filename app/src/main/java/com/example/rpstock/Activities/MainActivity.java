@@ -1,19 +1,25 @@
-package com.example.rpstock;
+package com.example.rpstock.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.rpstock.Objects.Employee;
+import com.example.rpstock.Fragments.ItemsListFragment;
+import com.example.rpstock.Fragments.ManageEmployeesFragment;
+import com.example.rpstock.R;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -36,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
 
     Query query;
     Employee currentEmployeeUser;
+
+    DrawerLayout mDrawerLayout;
+    NavigationView mNavigationView;
+    private ActionBarDrawerToggle t;
 
     private DatabaseReference usersDatabaseRef;
     private FirebaseUser currentUser;
@@ -70,14 +80,12 @@ public class MainActivity extends AppCompatActivity {
                 if (dataSnapshot != null) {
                     currentEmployeeUser = dataSnapshot.getValue(Employee.class);
                     userNameTV.setText("Hi " + currentEmployeeUser.getName());
-                }
-                else {
+                } else {
                     currentEmployeeUser = new Employee();
                     currentEmployeeUser.setAdmin(true);
                 }
 
-                Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-                setSupportActionBar(myToolbar);
+                setDrawerMenu();
             }
 
             @Override
@@ -98,6 +106,25 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+    }
+
+    private void setDrawerMenu() {
+
+
+//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+//        mNavigationView = (NavigationView) findViewById(R.id.navigation);
+//
+//
+//
+//        Toolbar myToolbar =  findViewById(R.id.my_toolbar);
+//        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout, myToolbar,R.string.app_name,
+//                R.string.app_name);
+//
+//        mDrawerLayout.addDrawerListener(mDrawerToggle);
+//        mDrawerToggle.syncState();
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
     }
 
     @Override
