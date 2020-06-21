@@ -4,75 +4,97 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.rpstock.Objects.Employee;
 import com.example.rpstock.Objects.Item;
 import com.example.rpstock.R;
+import com.example.rpstock.UserStockDialog;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class UserStockListAdapter extends BaseAdapter {
+public class UserStockListAdapter extends RecyclerView.Adapter<UserStockListAdapter.MyViewHolder> {
 
-    private static LayoutInflater inflater = null;
     ArrayList<Item> listItems = new ArrayList<Item>();
-    private Button increaseAmount;
-    private Button decreaseAmount;
-    private TextView itemName;
 
-    public UserStockListAdapter(Context context, ArrayList<Item> data) {
-        listItems = data;
-        inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public UserStockListAdapter(ArrayList<Item> employeeArrayList) {
+        Collections.reverse(employeeArrayList);
+        listItems = employeeArrayList;
+    }
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View listItem = layoutInflater.inflate(R.layout.stock_item, parent, false);
+
+        UserStockListAdapter.MyViewHolder vh = new UserStockListAdapter.MyViewHolder(listItem);
+        return vh;
     }
 
     @Override
-    public int getCount() {
-        return listItems.size();
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        holder.bind(listItems.get(position), position);
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public int getItemCount() {
+        if (listItems != null) {
+            return listItems.size();
+        } else {
+            return 0;
+        }
     }
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-    @Override
-    public View getView(int position, View convertView, final ViewGroup parent) {
-        View vi = convertView;
-        if (vi == null) {
-            vi = inflater.inflate(R.layout.stock_item, null);
+        public TextView name, password, email, phone;
+        public ImageButton options;
+        private Button increaseAmount;
+        private Button decreaseAmount;
+        private TextView itemName;
+
+        public MyViewHolder(View view) {
+            super(view);
+            name = view.findViewById(R.id.name);
+            email = view.findViewById(R.id.email);
+            password = view.findViewById(R.id.password);
+            phone = view.findViewById(R.id.phone);
         }
 
-        TextView text = vi.findViewById(R.id.name_of_item);
-        text.setText(listItems.get(position).getName());
-        EditText amount = vi.findViewById(R.id.amount);
-//        amount.setText(listItems.get(position).getAmount());
+        public void bind(final Item item, final int position) {
 
-        increaseAmount = vi.findViewById(R.id.increase_amount);
-        increaseAmount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(parent.getContext(), "+1", Toast.LENGTH_SHORT).show();
-            }
-        });
+            TextView text = itemView.findViewById(R.id.name_of_item);
+            text.setText(item.getName());
+            EditText amount = itemView.findViewById(R.id.amount);
+            amount.setText(String.valueOf(item.getAmount()));
 
-        decreaseAmount = vi.findViewById(R.id.decrease_amount);
-        decreaseAmount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(parent.getContext(), "-1", Toast.LENGTH_SHORT).show();
-            }
-        });
-        itemName = vi.findViewById(R.id.name_of_item);
+            increaseAmount = itemView.findViewById(R.id.increase_amount);
+            increaseAmount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(v.getContext(), "+1", Toast.LENGTH_SHORT).show();
+                }
+            });
 
-        return vi;
+            decreaseAmount = itemView.findViewById(R.id.decrease_amount);
+            decreaseAmount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(v.getContext(), "-1", Toast.LENGTH_SHORT).show();
+                }
+            });
+            itemName = itemView.findViewById(R.id.name_of_item);
+        }
     }
 }

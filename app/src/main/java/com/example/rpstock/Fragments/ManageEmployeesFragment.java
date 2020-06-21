@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -136,6 +137,10 @@ public class ManageEmployeesFragment extends Fragment {
             layoutManager = new LinearLayoutManager(getContext());
         }
         employessList.setLayoutManager(layoutManager);
+
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(employessList.getContext(),
+//                DividerItemDecoration.VERTICAL);
+//        employessList.addItemDecoration(dividerItemDecoration);
 
         if (mAdapter == null) {
             mAdapter = new EmployeesAdapter(employeeArrayList);

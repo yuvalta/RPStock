@@ -6,7 +6,6 @@
     tools:context=".Fragments.ItemsListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:background="@android:color/darker_gray"
         android:scrollbars="vertical"
         android:id="@+id/items_recycler_list"
         android:layout_width="match_parent"

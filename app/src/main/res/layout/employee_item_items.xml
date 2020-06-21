@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:elevation="10dp"
-    android:layout_marginBottom="10dp"
-    android:background="@drawable/item_background"
-    android:layout_height="?android:attr/listPreferredItemHeightLarge">
+    android:layout_margin="10dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="8dp"
 
+    android:background="@drawable/item_background"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <TextView
         android:layout_margin="5dp"
         android:id="@+id/name"
@@ -16,9 +23,7 @@
         android:layout_height="wrap_content"
         android:text="Name"
         android:textStyle="bold"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="20sp" />
 
     <TextView
         android:layout_margin="5dp"
@@ -27,10 +32,7 @@
         android:layout_height="wrap_content"
         android:text="Phone"
         android:textStyle="bold"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@id/name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="20sp" />
 
     <TextView
         android:layout_margin="5dp"
@@ -38,9 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
+        android:textSize="18sp" />
 
     <TextView
 
@@ -50,19 +50,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/email"
         android:text="Password"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@id/email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
-
-    <ImageButton
-        android:id="@+id/item_options"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:src="@drawable/options_dots"
-        android:background="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="10dp"
-        />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textSize="18sp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
