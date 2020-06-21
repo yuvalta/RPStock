@@ -1,7 +1,9 @@
 package com.example.rpstock.Objects;
 
-public class Employee {
+import java.util.ArrayList;
+import java.util.HashMap;
 
+public class Employee {
 
 
     private String ID;
@@ -10,6 +12,8 @@ public class Employee {
     private String password;
     private String phone;
     private boolean isAdmin = false;
+
+    private HashMap<String, Integer> items = new HashMap();
 
     public Employee() {
     }
@@ -70,4 +74,13 @@ public class Employee {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public void setItems(HashMap<String, Integer> items) {
+        this.items = items;
+    }
+
+    public HashMap<String, Integer> getItems() {
+        return items;
+    }
+
 }

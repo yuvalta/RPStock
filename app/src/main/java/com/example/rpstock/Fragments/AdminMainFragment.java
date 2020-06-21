@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -107,7 +108,7 @@ public class AdminMainFragment extends Fragment {
         employessList.setHasFixedSize(true);
 
         if (layoutManager == null) {
-            layoutManager = new LinearLayoutManager(getContext());
+            layoutManager = new GridLayoutManager(getContext(), 2);
         }
         employessList.setLayoutManager(layoutManager);
 

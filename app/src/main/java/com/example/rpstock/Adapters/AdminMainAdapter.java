@@ -82,7 +82,7 @@ public class AdminMainAdapter extends RecyclerView.Adapter<AdminMainAdapter.MyVi
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    UserStockDialog dialog = new UserStockDialog(itemView.getContext());
+                    UserStockDialog dialog = new UserStockDialog(itemView.getContext(), item, v);
                     dialog.show();
                     return false;
                 }

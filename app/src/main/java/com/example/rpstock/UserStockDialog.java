@@ -1,5 +1,6 @@
 package com.example.rpstock;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -22,13 +23,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class UserStockDialog extends Dialog {
 
-
-    private Button increaseAmount;
-    private Button decreaseAmount;
-    private TextView itemName;
+    private View view;
+    //    private Button increaseAmount;
+//    private Button decreaseAmount;
+//    private TextView itemName;
     private ListView listView;
 
     private FirebaseAuth mAuth;
@@ -46,11 +49,11 @@ public class UserStockDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_stock_dialog);
 
-        increaseAmount = findViewById(R.id.increase_amount);
-        increaseAmount.setOnClickListener(increaseAmountClick);
-        decreaseAmount = findViewById(R.id.decrease_amount);
-        decreaseAmount.setOnClickListener(decreaseAmountClick);
-        itemName = findViewById(R.id.name_of_item);
+//        increaseAmount = findViewById(R.id.increase_amount);
+//        increaseAmount.setOnClickListener(increaseAmountClick);
+//        decreaseAmount = findViewById(R.id.decrease_amount);
+//        decreaseAmount.setOnClickListener(decreaseAmountClick);
+//        itemName = findViewById(R.id.name_of_item);
         listView = findViewById(R.id.stock_items_list);
 
 
@@ -63,26 +66,13 @@ public class UserStockDialog extends Dialog {
     }
 
     private void getListFromDB() {
-        mDatabase.child("items");
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listItems.clear();
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    //for (DataSnapshot ds1 : ds.getChildren()) {
-                        Item e = ds.getValue(Item.class);
-
-                        listItems.add(e);
-                    //}
-                }
-                setAdapterToList();            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(), "Error in loading", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        for (Map.Entry<String, Integer> entry : oldEmployee.getItems().entrySet()) {
+            Item item = new Item();
+            item.setAmount(entry.getValue());
+            item.setName(entry.getKey());
+            listItems.add(item);
+        }
+        setAdapterToList();
     }
 
     private void setAdapterToList() {
@@ -94,25 +84,26 @@ public class UserStockDialog extends Dialog {
         super(context);
     }
 
-    public UserStockDialog(Context context, Employee oldEmployee) {
+    public UserStockDialog(Context context, Employee oldEmployee, View v) {
         super(context);
+        this.view = v;
         this.oldEmployee = oldEmployee;
         this.context = context;
     }
 
-    View.OnClickListener increaseAmountClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(context, "+1", Toast.LENGTH_SHORT).show();
-        }
-    };
-
-    View.OnClickListener decreaseAmountClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(context, "-1", Toast.LENGTH_SHORT).show();
-        }
-    };
+//    View.OnClickListener increaseAmountClick = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            Toast.makeText(context, "+1", Toast.LENGTH_SHORT).show();
+//        }
+//    };
+//
+//    View.OnClickListener decreaseAmountClick = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            Toast.makeText(context, "-1", Toast.LENGTH_SHORT).show();
+//        }
+//    };
 
 
 }
