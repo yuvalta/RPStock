@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.fragment_frame, new AdminMainFragment(), "home");
         }
         else {
-            fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(), "home");
+            fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(currentEmployeeUser), "home");
         }
         fragmentTransaction.commit();
     }
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_home_user: {
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(), "home").commit();
+                fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(currentEmployeeUser), "home").commit();
 
                 return true;
             }

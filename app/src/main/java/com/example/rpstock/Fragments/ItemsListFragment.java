@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,12 +40,17 @@ public class ItemsListFragment extends Fragment {
     private DatabaseReference mDatabase;
 
     private ArrayList<Item> items = new ArrayList<>();
+    private Employee employee;
     private RecyclerView employessList;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
 
     public ItemsListFragment() {
+    }
+
+    public ItemsListFragment(Employee employee) {
+        this.employee = employee;
     }
 
     public static ItemsListFragment newInstance(String param1, String param2) {
@@ -73,11 +79,20 @@ public class ItemsListFragment extends Fragment {
         employessList = v.findViewById(R.id.items_recycler_list);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        getListFromDB();
+//        getListFromDB();
+        getListOfItemsFromEmployee(employee);
+        inflateEmployeesList();
 
         return v;
     }
-    private void getListFromDB() { // TODO: problem here! why its give my the items and not users?
+
+    @Override
+    public void onDestroy() {
+        getActivity().getSupportFragmentManager().popBackStack();
+        super.onDestroy();
+    }
+
+    private void getListFromDB() {
 //        progressBar.setVisibility(View.VISIBLE);
         mDatabase.child("users");
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -89,7 +104,6 @@ public class ItemsListFragment extends Fragment {
                         Employee e = ds1.getValue(Employee.class);
 
                         getListOfItemsFromEmployee(e);
-
                     }
                 }
                 inflateEmployeesList();
@@ -127,5 +141,11 @@ public class ItemsListFragment extends Fragment {
             mAdapter = new UserStockListAdapter(items);
         }
         employessList.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onDetach() {
+
+        super.onDetach();
     }
 }

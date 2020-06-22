@@ -8,8 +8,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.rpstock.Fragments.ItemsListFragment;
 import com.example.rpstock.Objects.Employee;
 import com.example.rpstock.R;
 import com.example.rpstock.UserStockDialog;
@@ -20,6 +25,7 @@ public class AdminMainAdapter extends RecyclerView.Adapter<AdminMainAdapter.MyVi
 
     private ArrayList<Employee> mDataset;
     private AdapterView.OnItemClickListener listener;
+    FragmentManager fragmentManager;
 
     public AdminMainAdapter(ArrayList<Employee> employeeArrayList) {
         mDataset = employeeArrayList;
@@ -73,8 +79,12 @@ public class AdminMainAdapter extends RecyclerView.Adapter<AdminMainAdapter.MyVi
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    UserStockDialog dialog = new UserStockDialog(itemView.getContext(), item, v);
-                    dialog.show();
+
+                    AppCompatActivity activity = (AppCompatActivity) itemView.getContext();
+                    Fragment myFragment = new ItemsListFragment(item);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, myFragment)
+                            .addToBackStack(null).commit();
+
                     return false;
                 }
             });

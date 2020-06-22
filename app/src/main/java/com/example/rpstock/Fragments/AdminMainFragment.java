@@ -46,8 +46,8 @@ public class AdminMainFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
 
     public AdminMainFragment() {
-        // Required empty public constructor
     }
+
     public static AdminMainFragment newInstance(String param1, String param2) {
         AdminMainFragment fragment = new AdminMainFragment();
         Bundle args = new Bundle();
@@ -79,7 +79,7 @@ public class AdminMainFragment extends Fragment {
         return v;
     }
 
-    private void getListFromDB() { // TODO: problem here! why its give my the items and not users?
+    private void getListFromDB() {
 //        progressBar.setVisibility(View.VISIBLE);
         mDatabase.child("users");
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -102,16 +102,15 @@ public class AdminMainFragment extends Fragment {
                 Toast.makeText(getContext(), "Error in loading", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
+
     private void inflateEmployeesList() {
         employessList.setHasFixedSize(true);
 
-        if (layoutManager == null) {
-            layoutManager = new GridLayoutManager(getContext(), 2);
-        }
-        employessList.setLayoutManager(layoutManager);
+//        if (layoutManager == null) {
+//            layoutManager = new GridLayoutManager(getContext(), 2);
+//        }
+            employessList.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         if (mAdapter == null) {
             mAdapter = new AdminMainAdapter(employees);
