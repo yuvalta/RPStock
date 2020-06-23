@@ -3,6 +3,7 @@ package com.example.rpstock.Fragments;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,11 +20,14 @@ import android.widget.Toast;
 
 import com.example.rpstock.Adapters.EmployeesAdapter;
 import com.example.rpstock.Objects.Employee;
+import com.example.rpstock.Objects.Item;
 import com.example.rpstock.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,12 +35,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class ManageEmployeesFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String REFERENCE_EMPLOYEE_ID = "0101";
 
     private String mParam1;
     private String mParam2;
@@ -49,6 +55,8 @@ public class ManageEmployeesFragment extends Fragment {
     private CheckBox isAdminCB;
     private ProgressBar progressBar;
 
+    private Employee newEmployee = new Employee();
+
     private RecyclerView employessList;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -56,6 +64,7 @@ public class ManageEmployeesFragment extends Fragment {
     private FirebaseAuth mAuth;
 
     private DatabaseReference mDatabase;
+    private FirebaseDatabase database;
 
     private ArrayList<Employee> employeeArrayList = new ArrayList<>();
 
@@ -135,12 +144,8 @@ public class ManageEmployeesFragment extends Fragment {
 
         if (layoutManager == null) {
             layoutManager = new LinearLayoutManager(getContext());
+            employessList.setLayoutManager(layoutManager);
         }
-        employessList.setLayoutManager(layoutManager);
-
-//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(employessList.getContext(),
-//                DividerItemDecoration.VERTICAL);
-//        employessList.addItemDecoration(dividerItemDecoration);
 
         if (mAdapter == null) {
             mAdapter = new EmployeesAdapter(employeeArrayList);
@@ -151,28 +156,71 @@ public class ManageEmployeesFragment extends Fragment {
     View.OnClickListener signInClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
             progressBar.setVisibility(View.VISIBLE);
 
-            final Employee newEmployee = new Employee(UUID.randomUUID().toString()
-                    , nameET.getText().toString(),
-                    emailET.getText().toString(),
-                    passwordET.getText().toString(),
-                    phoneET.getText().toString(),
-                    isAdminCB.isChecked());
+            mDatabase.child("users").child(REFERENCE_EMPLOYEE_ID).child("items").addValueEventListener(new ValueEventListener() {
 
-            mAuth.createUserWithEmailAndPassword(newEmployee.getEmail(),
-                    newEmployee.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    HashMap<String, Item> map = new HashMap<>();
 
-                    mDatabase.child("users").child(newEmployee.getID()).setValue(newEmployee);
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                    FirebaseAuth.getInstance().signOut();
+                        String id = ds.getKey();
+                        Item item = ds.getValue(Item.class);
 
-                    progressBar.setVisibility(View.INVISIBLE);
+                        map.put(id, item);
+                    }
+                    newEmployee.setItems(map);
+
+                    setEmployeeProps();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
                 }
             });
+
+
         }
+
     };
+
+
+    private void setEmployeeProps() {
+        newEmployee.setID(UUID.randomUUID().toString());
+        newEmployee.setAdmin(isAdminCB.isChecked());
+        newEmployee.setEmail(emailET.getText().toString());
+        newEmployee.setName(nameET.getText().toString());
+        newEmployee.setPassword(passwordET.getText().toString());
+        newEmployee.setPhone(phoneET.getText().toString());
+
+//        newEmployee = new Employee(UUID.randomUUID().toString()
+//                , nameET.getText().toString(),
+//                emailET.getText().toString(),
+//                passwordET.getText().toString(),
+//                phoneET.getText().toString(),
+//                isAdminCB.isChecked());
+
+        mAuth.createUserWithEmailAndPassword(newEmployee.getEmail(),
+                newEmployee.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                mDatabase.child("users").child(newEmployee.getID()).setValue(newEmployee);
+
+                FirebaseAuth.getInstance().signOut();
+
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "Error!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 }

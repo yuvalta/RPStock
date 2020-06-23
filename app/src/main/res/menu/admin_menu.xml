@@ -11,9 +11,6 @@
         android:id="@+id/menu_items" />
 
     <item
-        android:title="@string/employees_stock"
-        android:id="@+id/menu_employees_stock" />
-    <item
         android:title="@string/manage_employees"
         android:id="@+id/menu_manage" />
     <item

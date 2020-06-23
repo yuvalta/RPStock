@@ -31,6 +31,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     private String ADMIN_EMAIL = "tamir.yuval1@gmail.com";
@@ -156,34 +158,40 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_home_user: {
 
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(currentEmployeeUser), "home").commit();
+                if (!checkIfFragmentInBackStack("home") && !checkIfFragmentInBackStack("admin_home")) {
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(currentEmployeeUser), "home")
+                            .addToBackStack(null).commit();
+                }
 
                 return true;
             }
             case R.id.menu_home_admin: {
 
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_frame, new AdminMainFragment(), "admin_home").commit();
-
+                if (!checkIfFragmentInBackStack("home") && !checkIfFragmentInBackStack("admin_home")) {
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_frame, new AdminMainFragment(), "admin_home")
+                            .addToBackStack(null).commit();
+                }
                 return true;
             }
 
             case R.id.menu_manage: {
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_frame, new ManageEmployeesFragment(), "manage_employees").commit();
-
+                if (!checkIfFragmentInBackStack("manage_employees")) {
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_frame, new ManageEmployeesFragment(), "manage_employees")
+                            .addToBackStack(null).commit();
+                }
                 return true;
             }
 
             case R.id.menu_items: {
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_frame, new AddItemFragment(), "add_item").commit();
-                return true;
-            }
-
-            case R.id.menu_employees_stock: {
-
+                if (!checkIfFragmentInBackStack("add_item")) {
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_frame, new AddItemFragment(), "add_item")
+                            .addToBackStack(null).commit();
+                }
                 return true;
             }
 
@@ -198,6 +206,11 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private boolean checkIfFragmentInBackStack(String tag) {
+        return Objects.equals(getSupportFragmentManager().getFragments()
+                .get(getSupportFragmentManager().getFragments().size() - 1).getTag(), tag);
     }
 
     public FirebaseDatabase getDatabase() {

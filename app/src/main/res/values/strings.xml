@@ -6,8 +6,7 @@
     <string name="password">password</string>
     <string name="sign_in">Sign in</string>
     <string name="home">Home</string>
-    <string name="add_new_item">Add New Item</string>
-    <string name="employees_stock">Employees stock</string>
+    <string name="add_new_item">Manage items</string>
     <string name="manage_employees">Manage employees</string>
     <string name="log_out">Log out</string>
 

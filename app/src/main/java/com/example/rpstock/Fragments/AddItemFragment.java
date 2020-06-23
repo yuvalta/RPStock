@@ -149,11 +149,11 @@ public class AddItemFragment extends Fragment {
 
         if (layoutManager == null) {
             layoutManager = new LinearLayoutManager(getContext());
+            itemsRecycler.setLayoutManager(layoutManager);
         }
-        itemsRecycler.setLayoutManager(layoutManager);
 
         if (mAdapter == null) {
-            mAdapter = new ItemsAdapter(itemsArrayList,employeeIDArrayList);
+            mAdapter = new ItemsAdapter(itemsArrayList, employeeIDArrayList);
         }
         itemsRecycler.setAdapter(mAdapter);
     }
@@ -168,7 +168,6 @@ public class AddItemFragment extends Fragment {
                     itemDiameter.getText().toString(),
                     itemKind.getText().toString(),
                     String.valueOf(UUID.randomUUID()));
-
 
 
             for (String employeeKey : employeeIDArrayList) {

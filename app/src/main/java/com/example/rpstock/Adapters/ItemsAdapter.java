@@ -60,8 +60,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
                 @Override
                 public void onClick(View v) {
                     DatabaseReference mDatabase = getInstance().getReference();
-
-                    // TODO: add items when adding new user
                     for (String employeeKey : employeeList) {
                         mDatabase.child("users").child(employeeKey).child("items").child(item.getID()).removeValue()
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
