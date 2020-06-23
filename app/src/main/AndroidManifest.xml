@@ -10,14 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Activities.LoginActivity">
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.MainActivity"></activity>
+        <activity
+            android:name=".Activities.MainActivity"
+            android:screenOrientation="nosensor">>
+        </activity>
     </application>
 
 </manifest>

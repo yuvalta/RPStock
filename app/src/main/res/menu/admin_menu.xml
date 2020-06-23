@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="start"
+    android:layoutDirection="rtl"
+    android:layout_gravity="start">
 
     <item
         android:title="@string/home"

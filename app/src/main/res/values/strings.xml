@@ -1,26 +1,25 @@
 <resources>
     <string name="app_name">RPStock</string>
-    <string name="enter_email">Enter Email:</string>
-    <string name="enter_password">Enter Password:</string>
-    <string name="email">email</string>
-    <string name="password">password</string>
-    <string name="sign_in">Sign in</string>
-    <string name="home">Home</string>
-    <string name="add_new_item">Manage items</string>
-    <string name="manage_employees">Manage employees</string>
-    <string name="log_out">Log out</string>
+    <string name="enter_email">הכנס כתובת אימייל</string>
+    <string name="enter_password">הכנס סיסמא</string>
+    <string name="email">אימייל</string>
+    <string name="password">סיסמא</string>
+    <string name="sign_in">היכנס</string>
+    <string name="home">מסך ראשי</string>
+    <string name="add_new_item">ניהול אביזרים</string>
+    <string name="manage_employees">נהל עובדים</string>
+    <string name="log_out">התנתק</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="enter_name">Enter Name:</string>
-    <string name="name">Name</string>
-    <string name="admin">Admin</string>
-    <string name="add_user">Add user</string>
-    <string name="enter_phone">Enter Phone:</string>
-    <string name="phone">Phone</string>
-    <string name="delete_employee">Delete employee</string>
-    <string name="update_employee">Update employee</string>
-    <string name="kind">Kind</string>
-    <string name="diameter">Diameter</string>
-    <string name="amount">Amount</string>
+    <string name="enter_name">הכנס שם</string>
+    <string name="name">שם</string>
+    <string name="admin">מנהל</string>
+    <string name="add_user">הוסך עובד</string>
+    <string name="enter_phone">הכנס מספר טלפון</string>
+    <string name="phone">טלפון</string>
+    <string name="delete_employee">מחק עובד</string>
+    <string name="update_employee">עדכן עובד</string>
+    <string name="kind">סוג</string>
+    <string name="diameter">קוטר</string>
+    <string name="amount">כמות</string>
 </resources>

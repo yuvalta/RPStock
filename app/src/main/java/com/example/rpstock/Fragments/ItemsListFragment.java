@@ -121,6 +121,7 @@ public class ItemsListFragment extends Fragment {
             Item item = new Item();
             item.setAmount(entry.getValue().getAmount());
             item.setName(entry.getValue().getName());
+            item.setID(entry.getKey());
             items.add(item);
         }
     }
@@ -132,13 +133,9 @@ public class ItemsListFragment extends Fragment {
             layoutManager = new LinearLayoutManager(getContext());
         }
         employessList.setLayoutManager(layoutManager);
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(employessList.getContext(),
-                DividerItemDecoration.VERTICAL);
-        employessList.addItemDecoration(dividerItemDecoration);
-
+        
         if (mAdapter == null) {
-            mAdapter = new UserStockListAdapter(items);
+            mAdapter = new UserStockListAdapter(items, employee);
         }
         employessList.setAdapter(mAdapter);
     }

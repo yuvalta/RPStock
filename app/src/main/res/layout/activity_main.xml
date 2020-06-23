@@ -24,15 +24,17 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <TextView
+            android:layout_centerVertical="true"
             android:layout_below="@id/my_toolbar"
             android:id="@+id/user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:textSize="20sp" />
+            android:layout_marginVertical="10dp"
+            android:layout_marginStart="10dp"
+            android:textSize="22sp" />
 
         <FrameLayout
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:id="@+id/fragment_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -44,13 +46,14 @@
         <!--        android:id="@+id/drawerLayout">-->
 
     </RelativeLayout>
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigation"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start|left"
-            app:headerLayout="@layout/header"
-            app:menu="@menu/admin_menu" />
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start|left"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/admin_menu" />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

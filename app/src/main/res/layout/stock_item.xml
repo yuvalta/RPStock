@@ -1,43 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="3dp"
+    android:layout_marginHorizontal="5dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginVertical="5dp"
+    android:background="@color/colorAccent"
+    app:cardCornerRadius="5dp"
+    android:elevation="8dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/increase_amount"
-        app:layout_constraintHorizontal_weight="3"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/name_of_item" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <Button
-        android:text="+"
-        app:layout_constraintStart_toEndOf="@id/name_of_item"
-        app:layout_constraintEnd_toStartOf="@id/amount"
-        app:layout_constraintHorizontal_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/increase_amount" />
+        <TextView
+            android:text="Item"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/name_of_item" />
 
-    <EditText
-        app:layout_constraintStart_toEndOf="@id/increase_amount"
-        app:layout_constraintEnd_toStartOf="@id/decrease_amount"
-        android:clickable="false"
-        app:layout_constraintHorizontal_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/amount" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <Button
-        android:text="-"
-        app:layout_constraintStart_toEndOf="@id/amount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/decrease_amount" />
+            <ImageButton
+                android:paddingVertical="20dp"
+                android:background="@color/red"
+                android:src="@drawable/neg_1"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/decrease_amount" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <EditText
+
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:inputType="numberDecimal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:id="@+id/amount" />
+
+            <ImageButton
+                android:paddingVertical="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/green"
+                android:src="@drawable/plus_1"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/increase_amount" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

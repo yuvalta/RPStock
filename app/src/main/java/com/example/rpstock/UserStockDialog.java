@@ -74,7 +74,7 @@ public class UserStockDialog extends Dialog {
         listView.addItemDecoration(dividerItemDecoration);
 
         if (mAdapter == null) {
-            mAdapter = new UserStockListAdapter(listItems);
+//            mAdapter = new UserStockListAdapter(listItems);
         }
         listView.setAdapter(mAdapter);
     }
