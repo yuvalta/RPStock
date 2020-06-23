@@ -43,8 +43,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
         public MyViewHolder(View view) {
             super(view);
             itemName = view.findViewById(R.id.item_name);
-            itemKind = view.findViewById(R.id.item_diameter);
-            itemDiameter = view.findViewById(R.id.item_kind);
+            itemDiameter = view.findViewById(R.id.item_diameter);
+            itemKind = view.findViewById(R.id.item_kind);
             itemAmount = view.findViewById(R.id.item_amount);
             deleteItem = view.findViewById(R.id.item_options);
         }
@@ -54,28 +54,27 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
             itemName.setText(item.getName());
             itemKind.setText(item.getKind());
             itemDiameter.setText(item.getDiameter());
-            itemAmount.setText(String.valueOf(item.getAmount()));
+            itemAmount.setText(String.valueOf(item.getAmount())); // need to ba amount
 
             deleteItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     DatabaseReference mDatabase = getInstance().getReference();
 
-                    // TODO: handle delete item
                     // TODO: add items when adding new user
                     for (String employeeKey : employeeList) {
-//                        mDatabase.child("users").child(employeeKey).child().removeValue()
-//                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                    @Override
-//                                    public void onComplete(@NonNull Task<Void> task) {
-//                                        Toast.makeText(itemView.getContext(), "Deleted!", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                }).addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-//                                Toast.makeText(itemView.getContext(), "Failed!", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
+                        mDatabase.child("users").child(employeeKey).child("items").child(item.getID()).removeValue()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(itemView.getContext(), "Deleted!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(itemView.getContext(), "Failed!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 }
             });

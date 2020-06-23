@@ -7,17 +7,17 @@ public class Item {
     private int amount;
     private String diameter;
     private String kind;
-
+    private String ID;
 
     public Item() {
     }
 
-    public Item(String _name, int _amount, String _diameter, String _kind) {
+    public Item(String _name, int _amount, String _diameter, String _kind, String _ID) {
         this.name = _name;
         this.amount = _amount;
         this.kind = _kind;
         this.diameter = _diameter;
-
+        this.ID = _ID;
     }
 
     public String getDiameter() {
@@ -50,5 +50,13 @@ public class Item {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 }

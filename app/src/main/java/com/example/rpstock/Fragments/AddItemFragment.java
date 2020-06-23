@@ -31,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class AddItemFragment extends Fragment {
 
@@ -109,18 +110,17 @@ public class AddItemFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 itemsArrayList.clear();
+                employeeIDArrayList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     for (DataSnapshot ds1 : ds.getChildren()) {
                         Employee e = ds1.getValue(Employee.class);
 
                         employeeIDArrayList.add(ds1.getKey());
 
-//                        getListOfItemsFromEmployee(e);
                     }
                     getListOfItemsFromEmployee(ds.child(employeeIDArrayList.get(0)).getValue(Employee.class));
                 }
                 inflateAllItemsList();
-//                progressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -138,6 +138,7 @@ public class AddItemFragment extends Fragment {
             item.setName(employeeItem.getValue().getName());
             item.setKind(employeeItem.getValue().getKind());
             item.setDiameter(employeeItem.getValue().getDiameter());
+            item.setID(employeeItem.getValue().getID());
             itemsArrayList.add(item);
         }
 
@@ -165,11 +166,13 @@ public class AddItemFragment extends Fragment {
             final Item newItem = new Item(itemName.getText().toString(),
                     0,
                     itemDiameter.getText().toString(),
-                    itemKind.getText().toString());
+                    itemKind.getText().toString(),
+                    String.valueOf(UUID.randomUUID()));
+
 
 
             for (String employeeKey : employeeIDArrayList) {
-                mDatabase.child("users").child(employeeKey).child("items").push().setValue(newItem)
+                mDatabase.child("users").child(employeeKey).child("items").child(newItem.getID()).setValue(newItem)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
