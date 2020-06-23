@@ -19,9 +19,6 @@ import com.example.rpstock.UserInfoDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
@@ -37,9 +34,9 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
         public MyViewHolder(View view) {
             super(view);
             name = view.findViewById(R.id.name);
-            email = view.findViewById(R.id.email);
-            password = view.findViewById(R.id.password);
-            phone = view.findViewById(R.id.phone);
+            email = view.findViewById(R.id.item_diameter);
+            password = view.findViewById(R.id.item_kind);
+            phone = view.findViewById(R.id.item_amount);
             options = view.findViewById(R.id.item_options);
         }
 
@@ -48,7 +45,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
             name.setText(item.getName());
             email.setText(item.getEmail());
             password.setText(item.getPassword());
-            phone.setText(item.getPhone()); // why it is null?
+            phone.setText(item.getPhone());
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

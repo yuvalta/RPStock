@@ -1,6 +1,5 @@
 package com.example.rpstock.Objects;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Employee {
@@ -13,7 +12,7 @@ public class Employee {
     private String phone;
     private boolean isAdmin = false;
 
-    private HashMap<String, Integer> items = new HashMap();
+    private HashMap<String, Item> items = new HashMap();
 
     public Employee() {
     }
@@ -75,11 +74,11 @@ public class Employee {
         this.phone = phone;
     }
 
-    public void setItems(HashMap<String, Integer> items) {
+    public void setItems(HashMap<String, Item> items) {
         this.items = items;
     }
 
-    public HashMap<String, Integer> getItems() {
+    public HashMap<String, Item> getItems() {
         return items;
     }
 

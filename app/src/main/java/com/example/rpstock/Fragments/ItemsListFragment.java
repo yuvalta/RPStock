@@ -117,10 +117,10 @@ public class ItemsListFragment extends Fragment {
     }
 
     private void getListOfItemsFromEmployee(Employee employee) {
-        for (Map.Entry<String, Integer> entry : employee.getItems().entrySet()) {
+        for (Map.Entry<String, Item> entry : employee.getItems().entrySet()) {
             Item item = new Item();
-            item.setAmount(entry.getValue());
-            item.setName(entry.getKey());
+            item.setAmount(entry.getValue().getAmount());
+            item.setName(entry.getValue().getName());
             items.add(item);
         }
     }
@@ -141,11 +141,5 @@ public class ItemsListFragment extends Fragment {
             mAdapter = new UserStockListAdapter(items);
         }
         employessList.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onDetach() {
-
-        super.onDetach();
     }
 }

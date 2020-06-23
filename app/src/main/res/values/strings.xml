@@ -21,4 +21,7 @@
     <string name="phone">Phone</string>
     <string name="delete_employee">Delete employee</string>
     <string name="update_employee">Update employee</string>
+    <string name="kind">Kind</string>
+    <string name="diameter">Diameter</string>
+    <string name="amount">Amount</string>
 </resources>

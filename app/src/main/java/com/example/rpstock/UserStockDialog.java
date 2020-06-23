@@ -48,18 +48,18 @@ public class UserStockDialog extends Dialog {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        getListFromDB();
+//        getListFromDB();
     }
 
-    private void getListFromDB() {
-        for (Map.Entry<String, Integer> entry : oldEmployee.getItems().entrySet()) {
-            Item item = new Item();
-            item.setAmount(entry.getValue());
-            item.setName(entry.getKey());
-            listItems.add(item);
-        }
-        setAdapterToList();
-    }
+//    private void getListFromDB() {
+//        for (Map.Entry<String, Integer> entry : oldEmployee.getItems().entrySet()) {
+//            Item item = new Item();
+//            item.setAmount(entry.getValue());
+//            item.setName(entry.getKey());
+//            listItems.add(item);
+//        }
+//        setAdapterToList();
+//    }
 
     private void setAdapterToList() {
         listView.setHasFixedSize(true);

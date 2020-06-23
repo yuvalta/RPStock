@@ -1,11 +1,8 @@
 package com.example.rpstock.Adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -15,10 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.rpstock.Objects.Employee;
 import com.example.rpstock.Objects.Item;
 import com.example.rpstock.R;
-import com.example.rpstock.UserStockDialog;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,9 +62,9 @@ public class UserStockListAdapter extends RecyclerView.Adapter<UserStockListAdap
         public MyViewHolder(View view) {
             super(view);
             name = view.findViewById(R.id.name);
-            email = view.findViewById(R.id.email);
-            password = view.findViewById(R.id.password);
-            phone = view.findViewById(R.id.phone);
+            email = view.findViewById(R.id.item_diameter);
+            password = view.findViewById(R.id.item_kind);
+            phone = view.findViewById(R.id.item_amount);
         }
 
         public void bind(final Item item, final int position) {

@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.rpstock.Fragments.AddItemFragment;
 import com.example.rpstock.Fragments.AdminMainFragment;
 import com.example.rpstock.Objects.Employee;
 import com.example.rpstock.Fragments.ItemsListFragment;
@@ -41,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
-    Query query;
     Employee currentEmployeeUser;
 
     DrawerLayout mDrawerLayout;
@@ -144,8 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (isAdmin) {
             fragmentTransaction.replace(R.id.fragment_frame, new AdminMainFragment(), "home");
-        }
-        else {
+        } else {
             fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(currentEmployeeUser), "home");
         }
         fragmentTransaction.commit();
@@ -178,9 +177,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             case R.id.menu_items: {
-
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_frame, new AddItemFragment(), "add_item").commit();
                 return true;
             }
+
             case R.id.menu_employees_stock: {
 
                 return true;

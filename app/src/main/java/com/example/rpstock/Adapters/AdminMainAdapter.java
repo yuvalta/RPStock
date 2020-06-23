@@ -11,13 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rpstock.Fragments.ItemsListFragment;
 import com.example.rpstock.Objects.Employee;
 import com.example.rpstock.R;
-import com.example.rpstock.UserStockDialog;
 
 import java.util.ArrayList;
 
@@ -64,9 +62,9 @@ public class AdminMainAdapter extends RecyclerView.Adapter<AdminMainAdapter.MyVi
         public MyViewHolder(View view) {
             super(view);
             name = view.findViewById(R.id.name);
-            email = view.findViewById(R.id.email);
-            password = view.findViewById(R.id.password);
-            phone = view.findViewById(R.id.phone);
+            email = view.findViewById(R.id.item_diameter);
+            password = view.findViewById(R.id.item_kind);
+            phone = view.findViewById(R.id.item_amount);
         }
 
         public void bind(final Employee item, final int position) {
