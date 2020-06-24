@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onClick(final View v) {
 
-            if (isEmailValid(emailET.getEditText().getText().toString()) && passwordET.getEditText().getText().length() > 6) {
+            if (isEmailValid(emailET.getEditText().getText().toString()) && passwordET.getEditText().getText().length() >= 6) {
 
                 progressBar.setVisibility(View.VISIBLE);
 

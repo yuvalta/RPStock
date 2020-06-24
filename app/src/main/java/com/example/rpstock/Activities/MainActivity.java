@@ -46,10 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
     Employee currentEmployeeUser;
 
-    DrawerLayout mDrawerLayout;
-    NavigationView mNavigationView;
-    private ActionBarDrawerToggle t;
-
     private DatabaseReference usersDatabaseRef;
     private FirebaseUser currentUser;
 
@@ -110,19 +106,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDrawerMenu() {
-
-
-//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-//        mNavigationView = (NavigationView) findViewById(R.id.navigation);
-//
-//
-//
-//        Toolbar myToolbar =  findViewById(R.id.my_toolbar);
-//        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout, myToolbar,R.string.app_name,
-//                R.string.app_name);
-//
-//        mDrawerLayout.addDrawerListener(mDrawerToggle);
-//        mDrawerToggle.syncState();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);

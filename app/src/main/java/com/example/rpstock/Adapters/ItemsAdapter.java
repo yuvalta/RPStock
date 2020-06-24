@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
         private TextView itemKind;
         private TextView itemDiameter;
         private TextView itemAmount;
+        ProgressBar progressBar;
         ImageView deleteItem;
 
         public MyViewHolder(View view) {
@@ -47,6 +49,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
             itemKind = view.findViewById(R.id.item_kind);
             itemAmount = view.findViewById(R.id.item_amount);
             deleteItem = view.findViewById(R.id.item_options);
+            progressBar = view.findViewById(R.id.add_item_progress);
+
         }
 
         public void bind(final Item item, final ArrayList<String> employeeList) {
@@ -54,23 +58,26 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
             itemName.setText(item.getName());
             itemKind.setText(item.getKind());
             itemDiameter.setText(item.getDiameter());
-            itemAmount.setText(String.valueOf(item.getAmount())); // need to ba amount
+            itemAmount.setText(String.valueOf(item.getAmount()));
 
             deleteItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+//                    progressBar.setVisibility(View.VISIBLE);
                     DatabaseReference mDatabase = getInstance().getReference();
                     for (String employeeKey : employeeList) {
                         mDatabase.child("users").child(employeeKey).child("items").child(item.getID()).removeValue()
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        Toast.makeText(itemView.getContext(), "Deleted!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(itemView.getContext(), R.string.deleted_item, Toast.LENGTH_SHORT).show();
+//                                        progressBar.setVisibility(View.GONE);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(itemView.getContext(), "Failed!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(itemView.getContext(), R.string.delete_item_falied, Toast.LENGTH_SHORT).show();
+//                                progressBar.setVisibility(View.GONE);
                             }
                         });
                     }

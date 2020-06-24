@@ -1,4 +1,18 @@
 <resources>
+    <string-array name="kind_array">
+        <item>ללא</item>
+        <item>פ.ח</item>
+        <item>פ.פ</item>
+    </string-array>
+
+    <string-array name="diameter_array">
+        <item>ללא</item>
+        <item>3/4</item>
+        <item>1</item>
+        <item>1.5</item>
+        <item>2</item>
+    </string-array>
+
     <string name="app_name">RPStock</string>
     <string name="enter_email">הכנס כתובת אימייל</string>
     <string name="enter_password">הכנס סיסמא</string>
@@ -9,10 +23,9 @@
     <string name="add_new_item">ניהול אביזרים</string>
     <string name="manage_employees">נהל עובדים</string>
     <string name="log_out">התנתק</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="enter_name">הכנס שם</string>
     <string name="name">שם</string>
+    <string name="name_item">שם האביזר</string>
     <string name="admin">האם מנהל?</string>
     <string name="add_user">הוסף עובד</string>
     <string name="enter_phone">הכנס מספר טלפון</string>
@@ -22,4 +35,10 @@
     <string name="kind">סוג</string>
     <string name="diameter">קוטר</string>
     <string name="amount">כמות</string>
+    <string name="deleted_item">נמחק אביזר</string>
+    <string name="delete_item_falied">נכשלה מחיקת אביזר!</string>
+    <string name="item_added_suc">אביזר נוסף בהצלחה</string>
+    <string name="add_item_failed">הוספת אביזר נכשלה</string>
+
+
 </resources>

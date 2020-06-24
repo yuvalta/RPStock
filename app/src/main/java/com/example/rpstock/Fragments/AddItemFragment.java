@@ -1,5 +1,7 @@
 package com.example.rpstock.Fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,8 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.rpstock.Adapters.ItemsAdapter;
@@ -22,6 +29,7 @@ import com.example.rpstock.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,18 +49,21 @@ public class AddItemFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    EditText itemName;
-    EditText itemDiameter;
-    EditText itemKind;
+    TextInputLayout itemName;
+    Spinner itemDiameter;
+    Spinner itemKind;
     Button addItemButton;
+
+    ProgressBar progressBar;
+
+    private String kindSelected;
+    private String diameterSelected;
 
     Employee currentEmployee;
 
     RecyclerView itemsRecycler;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-
-//    private FirebaseAuth mAuth;
 
     private DatabaseReference mDatabase;
 
@@ -88,6 +99,7 @@ public class AddItemFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_item, container, false);
 
+        progressBar = view.findViewById(R.id.add_item_progress);
         itemName = view.findViewById(R.id.item_name_ET);
         itemKind = view.findViewById(R.id.item_kind_ET);
         itemDiameter = view.findViewById(R.id.item_diameter_ET);
@@ -97,6 +109,9 @@ public class AddItemFragment extends Fragment {
         addItemButton.setOnClickListener(addButtonClick);
         itemsRecycler = view.findViewById(R.id.items_list);
 
+        setKindSpinner(view.getContext());
+        setDiameterSpinner(view.getContext());
+
 
         getListFromDB();
 
@@ -104,7 +119,44 @@ public class AddItemFragment extends Fragment {
         return view;
     }
 
+    private void setKindSpinner(Context context) {
+        ArrayAdapter<CharSequence> adapterKind = ArrayAdapter.createFromResource(context,
+                R.array.kind_array, android.R.layout.simple_spinner_item);
+        adapterKind.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        itemKind.setAdapter(adapterKind);
+        itemKind.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                kindSelected = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void setDiameterSpinner(Context context) {
+        ArrayAdapter<CharSequence> adapterDiameter = ArrayAdapter.createFromResource(context,
+                R.array.diameter_array, android.R.layout.simple_spinner_item);
+        adapterDiameter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        itemDiameter.setAdapter(adapterDiameter);
+        itemDiameter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                diameterSelected = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
     private void getListFromDB() {
+        progressBar.setVisibility(View.VISIBLE);
         mDatabase.child("users");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -121,6 +173,7 @@ public class AddItemFragment extends Fragment {
                     getListOfItemsFromEmployee(ds.child(employeeIDArrayList.get(0)).getValue(Employee.class));
                 }
                 inflateAllItemsList();
+
             }
 
             @Override
@@ -156,17 +209,19 @@ public class AddItemFragment extends Fragment {
             mAdapter = new ItemsAdapter(itemsArrayList, employeeIDArrayList);
         }
         itemsRecycler.setAdapter(mAdapter);
+        progressBar.setVisibility(View.GONE);
     }
 
     View.OnClickListener addButtonClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            progressBar.setVisibility(View.VISIBLE);
+            hideKeyboard(getActivity());
+            progressBar.setVisibility(View.VISIBLE);
 
-            final Item newItem = new Item(itemName.getText().toString(),
+            final Item newItem = new Item(itemName.getEditText().getText().toString(),
                     0,
-                    itemDiameter.getText().toString(),
-                    itemKind.getText().toString(),
+                    diameterSelected,
+                    kindSelected,
                     String.valueOf(UUID.randomUUID()));
 
 
@@ -175,15 +230,27 @@ public class AddItemFragment extends Fragment {
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(getActivity(), "Item Added!", Toast.LENGTH_SHORT).show();
+                                itemName.getEditText().setText("");
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(getActivity(), R.string.item_added_suc, Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getActivity(), R.string.add_item_failed, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         }
     };
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 }

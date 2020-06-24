@@ -4,25 +4,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_marginHorizontal="10dp"
     tools:context=".Fragments.AddItemFragment">
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/name"
-        android:id="@+id/item_name_ET"/>
+        android:hint="@string/name_item"
+        android:id="@+id/item_name_ET">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/kind"
-        android:id="@+id/item_kind_ET"/>
+        <com.google.android.material.textfield.TextInputEditText
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <EditText
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:textDirection="rtl"
+        android:gravity="right"
+        android:layout_gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/diameter"
-        android:id="@+id/item_diameter_ET"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:textSize="16sp"
+            android:textDirection="rtl"
+            android:gravity="center_vertical"
+            android:layout_gravity="right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/kind"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:layout_weight="2"
+            android:prompt="@string/kind"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="15dp"
+            android:id="@+id/item_kind_ET" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:textSize="16dp"
+        android:textDirection="rtl"
+        android:foregroundGravity="right"
+        android:layout_gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textSize="16sp"
+            android:textDirection="rtl"
+            android:gravity="center_vertical"
+            android:layout_gravity="right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/diameter"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:prompt="@string/diameter"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:paddingVertical="15dp"
+            android:id="@+id/item_diameter_ET" />
+    </LinearLayout>
 
     <Button
         style="@style/button_style"
@@ -33,11 +85,25 @@
         android:layout_height="wrap_content"
         android:text="@string/add_new_item"
         android:textAllCaps="false"
-        android:id="@+id/add_item_button"/>
-    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/add_item_button" />
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:id="@+id/items_list"/>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:id="@+id/items_list" />
+
+        <ProgressBar
+            android:id="@+id/add_item_progress"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:visibility="gone" />
+    </FrameLayout>
+
 
 </LinearLayout>
