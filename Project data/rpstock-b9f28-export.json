@@ -1,0 +1,35 @@
+{
+  "users" : {
+    "0101" : {
+      "admin" : true,
+      "email" : "tamir.yuval1@gmail.com",
+      "items" : {
+        "202020" : {
+          "amount" : 0,
+          "diameter" : "3/4",
+          "kind" : "פ.ח",
+          "name" : "ברז"
+        }
+      },
+      "name" : "Yuval Tamir",
+      "password" : "123456",
+      "phone" : "654321"
+    },
+    "8ba79b45-f4dc-4f72-8887-332dd9be9f27" : {
+      "admin" : true,
+      "email" : "admin@gmail.com",
+      "id" : "8ba79b45-f4dc-4f72-8887-332dd9be9f27",
+      "name" : "Admin admin",
+      "password" : "123456",
+      "phone" : "654321"
+    },
+    "fa032957-a743-4199-aa38-1e541c22aeb3" : {
+      "admin" : false,
+      "email" : "user@gmail.com",
+      "id" : "fa032957-a743-4199-aa38-1e541c22aeb3",
+      "name" : "User",
+      "password" : "123456",
+      "phone" : "654321"
+    }
+  }
+}

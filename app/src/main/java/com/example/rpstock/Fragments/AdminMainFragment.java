@@ -110,7 +110,7 @@ public class AdminMainFragment extends Fragment {
 //        if (layoutManager == null) {
 //            layoutManager = new GridLayoutManager(getContext(), 2);
 //        }
-            employessList.setLayoutManager(new GridLayoutManager(getContext(), 2));
+            employessList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         if (mAdapter == null) {
             mAdapter = new AdminMainAdapter(employees);

@@ -1,124 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_margin="5dp"
-        android:weightSum="3.3"
-        android:layout_marginTop="20dp"
-        android:id="@+id/enter_name_LL"
-        android:layout_centerHorizontal="true"
+
+    <EditText
+        android:textDirection="rtl"
+        android:inputType="textEmailAddress"
+        android:id="@+id/enter_name_ET"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:textSize="18sp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/enter_name" />
-
-        <EditText
-            android:inputType="textEmailAddress"
-            android:layout_weight="2.3"
-            android:id="@+id/enter_name_ET"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/name" />
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:hint="@string/name" />
 
 
-    <LinearLayout
-        android:layout_below="@id/enter_name_LL"
-        android:layout_margin="5dp"
-        android:weightSum="3.3"
-        android:id="@+id/enter_email_LL"
-        android:layout_centerInParent="true"
+    <EditText
+        android:inputType="textEmailAddress"
+        android:id="@+id/enter_email_ET"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:hint="@string/email" />
 
-        <TextView
-            android:textSize="18sp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/enter_email" />
 
-        <EditText
-            android:inputType="textEmailAddress"
-            android:layout_weight="2.3"
-            android:id="@+id/enter_email_ET"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/email" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_below="@id/enter_email_LL"
-        android:layout_margin="5dp"
-        android:weightSum="3.3"
-        android:id="@+id/enter_phone_LL"
-        android:layout_centerInParent="true"
+    <EditText
+        android:layout_gravity="right"
+        android:textDirection="rtl"
+        android:inputType="phone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:id="@+id/enter_phone_ET"
+        android:layout_height="wrap_content"
+        android:hint="@string/phone" />
 
-        <TextView
-            android:textSize="18sp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/enter_phone" />
 
-        <EditText
-            android:inputType="phone"
-            android:layout_weight="2.3"
-            android:id="@+id/enter_phone_ET"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/phone" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_margin="5dp"
-        android:weightSum="3.3"
-        android:layout_below="@id/enter_phone_LL"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/enter_password_LL"
+    <EditText
+        android:textDirection="rtl"
+        android:inputType="text"
+        android:id="@+id/enter_password_ET"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:lines="2"
-            android:textSize="18sp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="@string/enter_password" />
-
-        <EditText
-            android:inputType="text"
-            android:layout_weight="2.3"
-            android:id="@+id/enter_password_ET"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/password" />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:hint="@string/password" />
 
     <LinearLayout
         android:layout_margin="5dp"
-        android:weightSum="3.3"
-        android:layout_below="@id/enter_password_LL"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@id/enter_password_ET"
         android:id="@+id/admin_LL"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:lines="2"
+            android:textDirection="rtl"
+            android:gravity="center_vertical"
             android:textSize="18sp"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -151,4 +84,4 @@
         android:indeterminate="true"
         android:id="@+id/progressbar" />
 
-</RelativeLayout>
+</LinearLayout>

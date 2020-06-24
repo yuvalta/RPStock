@@ -88,8 +88,11 @@ public class ItemsListFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        getActivity().getSupportFragmentManager().popBackStack();
-        super.onDestroy();
+        try {
+            getActivity().getSupportFragmentManager().popBackStack();
+            super.onDestroy();
+        } catch (Exception e) {
+        }
     }
 
     private void getListFromDB() {
@@ -122,6 +125,8 @@ public class ItemsListFragment extends Fragment {
             item.setAmount(entry.getValue().getAmount());
             item.setName(entry.getValue().getName());
             item.setID(entry.getKey());
+            item.setKind(entry.getValue().getKind());
+            item.setDiameter(entry.getValue().getDiameter());
             items.add(item);
         }
     }
@@ -133,7 +138,7 @@ public class ItemsListFragment extends Fragment {
             layoutManager = new LinearLayoutManager(getContext());
         }
         employessList.setLayoutManager(layoutManager);
-        
+
         if (mAdapter == null) {
             mAdapter = new UserStockListAdapter(items, employee);
         }

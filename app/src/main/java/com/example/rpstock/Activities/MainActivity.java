@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 if (dataSnapshot != null) {
                     currentEmployeeUser = dataSnapshot.getValue(Employee.class);
                     currentEmployeeUser.setID(dataSnapshot.getKey());
-                    userNameTV.setText("Hi " + currentEmployeeUser.getName());
+                    userNameTV.setText("אהלן אהלן " + currentEmployeeUser.getName() + "!");
                 } else {
                     currentEmployeeUser = new Employee();
                     currentEmployeeUser.setAdmin(true);

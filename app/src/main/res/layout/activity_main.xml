@@ -27,6 +27,7 @@
             android:layout_centerVertical="true"
             android:layout_below="@id/my_toolbar"
             android:id="@+id/user_name"
+            android:textDirection="rtl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"

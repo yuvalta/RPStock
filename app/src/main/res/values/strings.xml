@@ -13,8 +13,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="enter_name">הכנס שם</string>
     <string name="name">שם</string>
-    <string name="admin">מנהל</string>
-    <string name="add_user">הוסך עובד</string>
+    <string name="admin">האם מנהל?</string>
+    <string name="add_user">הוסף עובד</string>
     <string name="enter_phone">הכנס מספר טלפון</string>
     <string name="phone">טלפון</string>
     <string name="delete_employee">מחק עובד</string>
