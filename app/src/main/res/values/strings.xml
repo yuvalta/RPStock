@@ -39,6 +39,8 @@
     <string name="delete_item_falied">נכשלה מחיקת אביזר!</string>
     <string name="item_added_suc">אביזר נוסף בהצלחה</string>
     <string name="add_item_failed">הוספת אביזר נכשלה</string>
+    <string name="employee_updated">פרטי עובד עודכנו</string>
+    <string name="error">תקלה</string>
 
 
 </resources>

@@ -1,5 +1,6 @@
 package com.example.rpstock.Fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,19 +13,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.rpstock.Activities.LoginActivity;
+import com.example.rpstock.Activities.MainActivity;
 import com.example.rpstock.Adapters.EmployeesAdapter;
 import com.example.rpstock.Objects.Employee;
 import com.example.rpstock.Objects.Item;
 import com.example.rpstock.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -37,6 +44,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ManageEmployeesFragment extends Fragment {
 
@@ -47,10 +56,10 @@ public class ManageEmployeesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private EditText emailET;
-    private EditText passwordET;
-    private EditText nameET;
-    private EditText phoneET;
+    private TextInputLayout emailET;
+    private TextInputLayout passwordET;
+    private TextInputLayout nameET;
+    private TextInputLayout phoneET;
     private Button signinButton;
     private CheckBox isAdminCB;
     private ProgressBar progressBar;
@@ -157,52 +166,48 @@ public class ManageEmployeesFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
-            progressBar.setVisibility(View.VISIBLE);
+            if (isEmailValid(emailET.getEditText().getText().toString()) && passwordET.getEditText().getText().length() >= 6) {
 
-            mDatabase.child("users").child(REFERENCE_EMPLOYEE_ID).child("items").addValueEventListener(new ValueEventListener() {
+                progressBar.setVisibility(View.VISIBLE);
 
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    HashMap<String, Item> map = new HashMap<>();
+                mDatabase.child("users").child(REFERENCE_EMPLOYEE_ID).child("items").addValueEventListener(new ValueEventListener() {
 
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        HashMap<String, Item> map = new HashMap<>();
 
-                        String id = ds.getKey();
-                        Item item = ds.getValue(Item.class);
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                        map.put(id, item);
+                            String id = ds.getKey();
+                            Item item = ds.getValue(Item.class);
+
+                            map.put(id, item);
+                        }
+                        newEmployee.setItems(map);
+
+                        setEmployeeProps();
                     }
-                    newEmployee.setItems(map);
 
-                    setEmployeeProps();
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-
+                    }
+                });
+            }
+            else {
+                displayErrorSnackbar("נא לבדוק שכתובת אימייל תקינה וסיסמא בעלת 6 תווים לפחות!", v);
+            }
         }
 
     };
 
-
     private void setEmployeeProps() {
         newEmployee.setID(UUID.randomUUID().toString());
         newEmployee.setAdmin(isAdminCB.isChecked());
-        newEmployee.setEmail(emailET.getText().toString());
-        newEmployee.setName(nameET.getText().toString());
-        newEmployee.setPassword(passwordET.getText().toString());
-        newEmployee.setPhone(phoneET.getText().toString());
-
-//        newEmployee = new Employee(UUID.randomUUID().toString()
-//                , nameET.getText().toString(),
-//                emailET.getText().toString(),
-//                passwordET.getText().toString(),
-//                phoneET.getText().toString(),
-//                isAdminCB.isChecked());
+        newEmployee.setEmail(emailET.getEditText().getText().toString());
+        newEmployee.setName(nameET.getEditText().getText().toString());
+        newEmployee.setPassword(passwordET.getEditText().getText().toString());
+        newEmployee.setPhone(phoneET.getEditText().getText().toString());
 
         mAuth.createUserWithEmailAndPassword(newEmployee.getEmail(),
                 newEmployee.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -214,13 +219,63 @@ public class ManageEmployeesFragment extends Fragment {
                 FirebaseAuth.getInstance().signOut();
 
                 progressBar.setVisibility(View.INVISIBLE);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), "Error!", Toast.LENGTH_SHORT).show();
+                displayErrorSnackbar("תקלה",getView());
+            }
+        }).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                displayErrorSnackbar("משתמש נוסף בהצלחה",getView());
+
+                resetAllET();
             }
         });
+    }
+
+    private void resetAllET() {
+        emailET.getEditText().setText("");
+        nameET.getEditText().setText("");
+        phoneET.getEditText().setText("");
+        passwordET.getEditText().setText("");
+        isAdminCB.setChecked(false);
+    }
+
+    private void displayErrorSnackbar(String s, View v) {
+        hideKeyboard(getActivity());
+        Snackbar.make(v, s, Snackbar.LENGTH_LONG).show();
+    }
+
+    public boolean isEmailValid(String email) {
+        String regExpn =
+                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                        + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                        + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                        + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+
+        if (matcher.matches())
+            return true;
+        else
+            return false;
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }

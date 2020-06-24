@@ -2,44 +2,68 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginHorizontal="10dp"
     android:orientation="vertical">
 
-
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:textDirection="rtl"
-        android:inputType="textEmailAddress"
         android:id="@+id/enter_name_ET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/name" />
+        android:hint="@string/enter_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
-    <EditText
-        android:inputType="textEmailAddress"
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/enter_email_ET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/email" />
+        android:hint="@string/enter_email">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
-    <EditText
-        android:layout_gravity="right"
-        android:textDirection="rtl"
-        android:inputType="phone"
-        android:layout_width="match_parent"
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/enter_phone_ET"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/phone" />
+        app:counterEnabled="true"
+        app:counterMaxLength="10"
+        android:hint="@string/enter_phone">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <EditText
-        android:textDirection="rtl"
-        android:inputType="text"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/enter_password_ET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/password" />
+        app:counterEnabled="true"
+        app:counterMaxLength="20"
+        android:hint="@string/enter_password">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_margin="5dp"

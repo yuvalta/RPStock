@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.rpstock.Fragments.AddItemFragment;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView userNameTV;
     private String userEmail;
 
+    private ProgressBar progressBar;
+
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
@@ -55,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        progressBar = findViewById(R.id.main_progress);
+        progressBar.setVisibility(View.VISIBLE);
 
         database = FirebaseDatabase.getInstance();
 
@@ -133,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(currentEmployeeUser), "home");
         }
+        progressBar.setVisibility(View.GONE);
         fragmentTransaction.commit();
     }
 

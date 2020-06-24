@@ -1,9 +1,12 @@
 package com.example.rpstock;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -12,20 +15,26 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.rpstock.Activities.MainActivity;
 import com.example.rpstock.Objects.Employee;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class UserInfoDialog extends Dialog {
 
-    private EditText emailET;
-    private EditText passwordET;
-    private EditText nameET;
-    private EditText phoneET;
+    private TextInputLayout emailET;
+    private TextInputLayout passwordET;
+    private TextInputLayout nameET;
+    private TextInputLayout phoneET;
     private Button signinButton;
     private CheckBox isAdminCB;
     private ProgressBar progressBar;
@@ -40,6 +49,8 @@ public class UserInfoDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_layout);
+        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT);
 
         emailET = findViewById(R.id.enter_email_ET);
         passwordET = findViewById(R.id.enter_password_ET);
@@ -58,10 +69,10 @@ public class UserInfoDialog extends Dialog {
     }
 
     private void setTextInET() {
-        emailET.setText(oldEmployee.getEmail());
-        passwordET.setText(oldEmployee.getPassword());
-        nameET.setText(oldEmployee.getName());
-        phoneET.setText(oldEmployee.getPhone());
+        emailET.getEditText().setText(oldEmployee.getEmail());
+        passwordET.getEditText().setText(oldEmployee.getPassword());
+        nameET.getEditText().setText(oldEmployee.getName());
+        phoneET.getEditText().setText(oldEmployee.getPhone());
         isAdminCB.setChecked(oldEmployee.isAdmin());
 
     }
@@ -79,31 +90,63 @@ public class UserInfoDialog extends Dialog {
     View.OnClickListener signInClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            progressBar.setVisibility(View.VISIBLE);
 
-            final Employee updateEmployee = new Employee(oldEmployee.getID(),
-                    nameET.getText().toString(),
-                    emailET.getText().toString(),
-                    passwordET.getText().toString(),
-                    phoneET.getText().toString(),
-                    isAdminCB.isChecked());
+            if (isEmailValid(emailET.getEditText().getText().toString()) && passwordET.getEditText().getText().length() >= 6) {
+                progressBar.setVisibility(View.VISIBLE);
+                final Employee updateEmployee = new Employee(oldEmployee.getID(),
+                        nameET.getEditText().getText().toString(),
+                        emailET.getEditText().getText().toString(),
+                        passwordET.getEditText().getText().toString(),
+                        phoneET.getEditText().getText().toString(),
+                        isAdminCB.isChecked());
 
-            mDatabase.child("users").child(updateEmployee.getID()).setValue(updateEmployee).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getContext(), "Updated!", Toast.LENGTH_SHORT).show();
-                    dismiss();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getContext(), "Failed, try again!!", Toast.LENGTH_SHORT).show();
-                }
-            });
-
+                mDatabase.child("users").child(updateEmployee.getID()).setValue(updateEmployee).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(getContext(), R.string.employee_updated, Toast.LENGTH_SHORT).show();
+                        dismiss();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(getContext(), "נא לבדוק שכתובת אימייל תקינה וסיסמא בעלת 6 תווים לפחות!", Toast.LENGTH_SHORT).show();
+            }
 
         }
     };
+
+    public boolean isEmailValid(String email) {
+        String regExpn =
+                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                        + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                        + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                        + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+
+        if (matcher.matches())
+            return true;
+        else
+            return false;
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 }

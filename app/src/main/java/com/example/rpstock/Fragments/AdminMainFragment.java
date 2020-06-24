@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.rpstock.Adapters.AdminMainAdapter;
@@ -44,6 +45,7 @@ public class AdminMainFragment extends Fragment {
     private RecyclerView employessList;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private ProgressBar progressBar;
 
     public AdminMainFragment() {
     }
@@ -72,6 +74,8 @@ public class AdminMainFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_admin_main, container, false);
 
         employessList = v.findViewById(R.id.employee_items_recycler);
+//        progressBar = v.findViewById(R.id.admin_progress);
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         getListFromDB();
@@ -94,7 +98,6 @@ public class AdminMainFragment extends Fragment {
                     }
                 }
                 inflateEmployeesList();
-//                progressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -110,11 +113,13 @@ public class AdminMainFragment extends Fragment {
 //        if (layoutManager == null) {
 //            layoutManager = new GridLayoutManager(getContext(), 2);
 //        }
-            employessList.setLayoutManager(new LinearLayoutManager(getContext()));
+        employessList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         if (mAdapter == null) {
             mAdapter = new AdminMainAdapter(employees);
         }
         employessList.setAdapter(mAdapter);
+
+//        progressBar.setVisibility(View.GONE);
     }
 }
