@@ -83,7 +83,7 @@
         android:background="@drawable/button_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_new_item"
+        android:text="הוסף אביזר"
         android:textAllCaps="false"
         android:id="@+id/add_item_button" />
 

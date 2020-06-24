@@ -1,8 +1,12 @@
 <resources>
     <string-array name="kind_array">
         <item>ללא</item>
-        <item>פ.ח</item>
+        <item>ח.פ</item>
         <item>פ.פ</item>
+        <item>אביזר</item>
+        <item>רקורד</item>
+        <item>מחבר</item>
+        <item>זווית</item>
     </string-array>
 
     <string-array name="diameter_array">
