@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="button_style">
+        <item name="elevation">9dp</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
 </resources>

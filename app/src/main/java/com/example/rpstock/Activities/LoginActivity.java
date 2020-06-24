@@ -3,11 +3,13 @@ package com.example.rpstock.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -17,17 +19,22 @@ import com.example.rpstock.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
     private FirebaseAuth mAuth;
 
-    private EditText emailET;
-    private EditText passwordET;
+    private TextInputLayout emailET;
+    private TextInputLayout passwordET;
 
     private ProgressBar progressBar;
 
@@ -71,32 +78,52 @@ public class LoginActivity extends AppCompatActivity {
 
     View.OnClickListener signInClick = new View.OnClickListener() {
         @Override
-        public void onClick(View v) {
+        public void onClick(final View v) {
 
-            progressBar.setVisibility(View.VISIBLE);
+            if (isEmailValid(emailET.getEditText().getText().toString()) && passwordET.getEditText().getText().length() > 6) {
 
-            mAuth.signInWithEmailAndPassword(emailET.getText().toString(), passwordET.getText().toString())
-                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                progressBar.setVisibility(View.VISIBLE);
 
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
+                mAuth.signInWithEmailAndPassword(emailET.getEditText().getText().toString(), passwordET.getEditText().getText().toString())
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
 
-                            progressBar.setVisibility(View.GONE);
-                            if (task.isSuccessful()) {
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                updateUI(user);
-                            } else {
-                                Toast.makeText(LoginActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                progressBar.setVisibility(View.GONE);
+                                if (task.isSuccessful()) {
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    updateUI(user);
+                                } else {
+                                    displayErrorSnackbar("משתמש לא נמצא!", v);
+                                }
                             }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(LoginActivity.this, "Error!", Toast.LENGTH_SHORT).show();
-                }
-            });
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        displayErrorSnackbar("תקלת רשת!", v);
+                    }
+                });
+            } else {
+                displayErrorSnackbar("נא לבדוק שכתובת אימייל תקינה וסיסמא בעלת 6 תווים לפחות!", v);
+            }
         }
     };
+
+    private void displayErrorSnackbar(String s, View v) {
+        hideKeyboard(LoginActivity.this);
+        Snackbar.make(v, s, Snackbar.LENGTH_LONG).show();
+    }
+
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
     private void updateUI(FirebaseUser currentUser) {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -108,11 +135,31 @@ public class LoginActivity extends AppCompatActivity {
 
     public void showHidePassword(View view) {
         if (showHidePasswordFlag) {
-            passwordET.setTransformationMethod(new PasswordTransformationMethod());
+            passwordET.getEditText().setTransformationMethod(new PasswordTransformationMethod());
             showHidePasswordFlag = false;
         } else {
-            passwordET.setTransformationMethod(null);
+            passwordET.getEditText().setTransformationMethod(null);
             showHidePasswordFlag = true;
         }
+    }
+
+    public boolean isEmailValid(String email) {
+        String regExpn =
+                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                        + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                        + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                        + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+
+        if (matcher.matches())
+            return true;
+        else
+            return false;
     }
 }

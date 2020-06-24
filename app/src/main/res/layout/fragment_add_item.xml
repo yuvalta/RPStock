@@ -25,6 +25,10 @@
         android:id="@+id/item_diameter_ET"/>
 
     <Button
+        style="@style/button_style"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:background="@drawable/button_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_new_item"
