@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
@@ -76,10 +77,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void getCurrentUserDataFromDB() {
         usersDatabaseRef = database.getReference("users");
-        usersDatabaseRef.orderByChild("email").equalTo(userEmail).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//        usersDatabaseRef.orderByChild("email").equalTo(userEmail).addValueEventListener(new ValueEventListener() {
+        usersDatabaseRef.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
 
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null) {
                     currentEmployeeUser = dataSnapshot.getValue(Employee.class);
                     currentEmployeeUser.setID(dataSnapshot.getKey());
@@ -90,19 +92,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 setDrawerMenu();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
             }
 
@@ -138,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         if (isAdmin) {
             fragmentTransaction.replace(R.id.fragment_frame, new AdminMainFragment(), "home");
         } else {
-            fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(currentEmployeeUser), "home");
+            fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(currentEmployeeUser, isAdmin), "home");
         }
         progressBar.setVisibility(View.GONE);
         fragmentTransaction.commit();
@@ -153,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!checkIfFragmentInBackStack("home") && !checkIfFragmentInBackStack("admin_home")) {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                    fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(currentEmployeeUser), "home")
+                    fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(currentEmployeeUser, false), "home")
                             .addToBackStack(null).commit();
                 }
 

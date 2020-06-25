@@ -28,11 +28,13 @@ public class UserStockListAdapter extends RecyclerView.Adapter<UserStockListAdap
 
     ArrayList<Item> listItems = new ArrayList<Item>();
     private Employee employee;
+    private boolean isAdmin;
 
-    public UserStockListAdapter(ArrayList<Item> itemArrayList, Employee _employee) {
+    public UserStockListAdapter(ArrayList<Item> itemArrayList, Employee _employee, boolean _isAdmin) {
         Collections.reverse(itemArrayList);
         listItems = itemArrayList;
         employee = _employee;
+        isAdmin = _isAdmin;
     }
 
     @NonNull
@@ -41,7 +43,7 @@ public class UserStockListAdapter extends RecyclerView.Adapter<UserStockListAdap
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem = layoutInflater.inflate(R.layout.stock_item, parent, false);
 
-        UserStockListAdapter.MyViewHolder vh = new UserStockListAdapter.MyViewHolder(listItem, employee);
+        UserStockListAdapter.MyViewHolder vh = new UserStockListAdapter.MyViewHolder(listItem, employee, isAdmin);
         return vh;
     }
 
@@ -75,10 +77,12 @@ public class UserStockListAdapter extends RecyclerView.Adapter<UserStockListAdap
         private Employee employeeInner;
         private NumberPicker amountOfItem;
         private TextView itemName;
+        private boolean innerIsAdmin;
 
-        public MyViewHolder(View view, Employee employee) {
+        public MyViewHolder(View view, Employee employee, boolean isAdmin) {
             super(view);
             employeeInner = employee;
+            innerIsAdmin = isAdmin;
         }
 
         public void bind(final Item item, final int position) {
@@ -95,14 +99,21 @@ public class UserStockListAdapter extends RecyclerView.Adapter<UserStockListAdap
             setNumberPicker(item.getAmount());
 
             increaseAmount = itemView.findViewById(R.id.increase_amount);
-            increaseAmount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    changeAmountByValue(item, 1, TYPE_INCR);
-                }
-            });
-
             decreaseAmount = itemView.findViewById(R.id.decrease_amount);
+
+            if (innerIsAdmin) {
+                increaseAmount.setVisibility(View.VISIBLE);
+                decreaseAmount.setClickable(true);
+                amountOfItem.setClickable(true);
+                amountOfItem.setEnabled(true);
+            } else {
+                increaseAmount.setVisibility(View.GONE);
+                decreaseAmount.setClickable(false);
+                amountOfItem.setClickable(false);
+                amountOfItem.setEnabled(false);
+            }
+
+
             decreaseAmount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -116,6 +127,7 @@ public class UserStockListAdapter extends RecyclerView.Adapter<UserStockListAdap
                     changeAmountByValue(item, newVal, TYPE_REPLACE_VALUE);
                 }
             });
+
         }
 
         private void setNumberPicker(int amount) {

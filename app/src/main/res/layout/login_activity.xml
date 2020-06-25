@@ -25,16 +25,18 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_gravity="right"
-
             android:layout_marginTop="40dp"
             android:layout_marginBottom="10dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="6"
             android:id="@+id/enter_email_ET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/enter_email">
+            android:hint="@string/enter_employee_number">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:inputType="textEmailAddress"
+                android:inputType="numberDecimal"
+                android:maxLength="6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

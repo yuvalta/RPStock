@@ -11,9 +11,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.rpstock.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,6 +29,7 @@ import java.util.regex.Pattern;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
+    private static final String EMAIL_SUFFIX = "@RPS.com";
     private FirebaseAuth mAuth;
 
     private TextInputLayout emailET;
@@ -76,15 +75,19 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
+
     View.OnClickListener signInClick = new View.OnClickListener() {
         @Override
         public void onClick(final View v) {
 
-            if (isEmailValid(emailET.getEditText().getText().toString()) && passwordET.getEditText().getText().length() >= 6) {
+            if (passwordET.getEditText().getText().length() >= 6) {
+
+                String emailFromID = addEmailToEmployeeID(emailET.getEditText().getText().toString());
 
                 progressBar.setVisibility(View.VISIBLE);
 
-                mAuth.signInWithEmailAndPassword(emailET.getEditText().getText().toString(), passwordET.getEditText().getText().toString())
+                mAuth.signInWithEmailAndPassword(emailFromID, passwordET.getEditText().getText().toString())
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
 
                             @Override
@@ -101,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        displayErrorSnackbar("תקלת רשת!", v);
+                        displayErrorSnackbar("משתמש לא נמצא!", v);
                     }
                 });
             } else {
@@ -143,23 +146,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public boolean isEmailValid(String email) {
-        String regExpn =
-                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
-                        + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
-                        + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
-                        + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
-
-        CharSequence inputStr = email;
-
-        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
-
-        if (matcher.matches())
-            return true;
-        else
-            return false;
+    public String addEmailToEmployeeID(String number) {
+        return (number.trim() + EMAIL_SUFFIX);
     }
 }

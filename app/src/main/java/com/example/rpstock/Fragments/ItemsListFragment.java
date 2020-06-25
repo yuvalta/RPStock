@@ -47,12 +47,15 @@ public class ItemsListFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private boolean isAdmin;
+
 
     public ItemsListFragment() {
     }
 
-    public ItemsListFragment(Employee employee) {
-        this.employee = employee;
+    public ItemsListFragment(Employee _employee, boolean _isAdmin) {
+        employee = _employee;
+        isAdmin = _isAdmin;
     }
 
     public static ItemsListFragment newInstance(String param1, String param2) {
@@ -88,14 +91,6 @@ public class ItemsListFragment extends Fragment {
         return v;
     }
 
-    @Override
-    public void onDestroy() {
-        try {
-            getActivity().getSupportFragmentManager().popBackStack();
-            super.onDestroy();
-        } catch (Exception e) {
-        }
-    }
 
     private void getListFromDB() {
 //        progressBar.setVisibility(View.VISIBLE);
@@ -150,7 +145,7 @@ public class ItemsListFragment extends Fragment {
         employessList.setLayoutManager(layoutManager);
 
         if (mAdapter == null) {
-            mAdapter = new UserStockListAdapter(items, employee);
+            mAdapter = new UserStockListAdapter(items, employee, isAdmin);
         }
         employessList.setAdapter(mAdapter);
     }

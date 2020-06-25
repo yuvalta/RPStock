@@ -43,7 +43,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
         public void bind(final Employee item, final int position) {
 
             name.setText(item.getName());
-            email.setText(item.getEmail());
+            email.setText(getIDFromEmail(item.getEmail()));
             password.setText(item.getPassword());
             phone.setText(item.getPhone());
 
@@ -87,7 +87,14 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
                         popup.show();
                     }
                 });
+
             }
+
+        }
+
+        public String getIDFromEmail(String number) {
+            int index = number.indexOf('@');
+            return number.substring(0, index);
         }
     }
 

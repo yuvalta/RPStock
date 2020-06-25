@@ -52,6 +52,7 @@ public class ManageEmployeesFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String REFERENCE_EMPLOYEE_ID = "0101";
+    private static final String EMAIL_SUFFIX = "@RPS.com";
 
     private String mParam1;
     private String mParam2;
@@ -166,7 +167,8 @@ public class ManageEmployeesFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
-            if (isEmailValid(emailET.getEditText().getText().toString()) && passwordET.getEditText().getText().length() >= 6) {
+            if (passwordET.getEditText().getText().length() >= 6) {
+
 
                 progressBar.setVisibility(View.VISIBLE);
 
@@ -193,8 +195,7 @@ public class ManageEmployeesFragment extends Fragment {
 
                     }
                 });
-            }
-            else {
+            } else {
                 displayErrorSnackbar("נא לבדוק שכתובת אימייל תקינה וסיסמא בעלת 6 תווים לפחות!", v);
             }
         }
@@ -202,9 +203,9 @@ public class ManageEmployeesFragment extends Fragment {
     };
 
     private void setEmployeeProps() {
-        newEmployee.setID(UUID.randomUUID().toString());
+
         newEmployee.setAdmin(isAdminCB.isChecked());
-        newEmployee.setEmail(emailET.getEditText().getText().toString());
+        newEmployee.setEmail(addEmailToEmployeeID(emailET.getEditText().getText().toString()));
         newEmployee.setName(nameET.getEditText().getText().toString());
         newEmployee.setPassword(passwordET.getEditText().getText().toString());
         newEmployee.setPhone(phoneET.getEditText().getText().toString());
@@ -214,6 +215,7 @@ public class ManageEmployeesFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
+                newEmployee.setID(mAuth.getCurrentUser().getUid());
                 mDatabase.child("users").child(newEmployee.getID()).setValue(newEmployee);
 
                 FirebaseAuth.getInstance().signOut();
@@ -224,12 +226,12 @@ public class ManageEmployeesFragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                displayErrorSnackbar("תקלה",getView());
+                displayErrorSnackbar("תקלה", getView());
             }
         }).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                displayErrorSnackbar("משתמש נוסף בהצלחה",getView());
+                displayErrorSnackbar("משתמש נוסף בהצלחה", getView());
 
                 resetAllET();
             }
@@ -249,24 +251,13 @@ public class ManageEmployeesFragment extends Fragment {
         Snackbar.make(v, s, Snackbar.LENGTH_LONG).show();
     }
 
-    public boolean isEmailValid(String email) {
-        String regExpn =
-                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
-                        + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
-                        + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
-                        + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+    public String addEmailToEmployeeID(String number) {
+        return (number.trim() + EMAIL_SUFFIX);
+    }
 
-        CharSequence inputStr = email;
-
-        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
-
-        if (matcher.matches())
-            return true;
-        else
-            return false;
+    public String getIDFromEmail(String number) {
+        int index = number.indexOf('@');
+        return number.substring(0, index);
     }
 
     public static void hideKeyboard(Activity activity) {

@@ -65,12 +65,13 @@ public class AdminMainAdapter extends RecyclerView.Adapter<AdminMainAdapter.MyVi
             email = view.findViewById(R.id.item_diameter);
             password = view.findViewById(R.id.item_kind);
             phone = view.findViewById(R.id.item_amount);
+
         }
 
         public void bind(final Employee item, final int position) {
 
             name.setText(item.getName());
-            email.setText(item.getEmail());
+            email.setText(getIDFromEmail(item.getEmail()));
             password.setText(item.getPassword());
             phone.setText(item.getPhone());
 
@@ -79,13 +80,18 @@ public class AdminMainAdapter extends RecyclerView.Adapter<AdminMainAdapter.MyVi
                 public boolean onLongClick(View v) {
 
                     AppCompatActivity activity = (AppCompatActivity) itemView.getContext();
-                    Fragment myFragment = new ItemsListFragment(item);
+                    Fragment myFragment = new ItemsListFragment(item, true);
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, myFragment)
                             .addToBackStack(null).commit();
 
                     return false;
                 }
             });
+        }
+
+        public String getIDFromEmail(String number) {
+            int index = number.indexOf('@');
+            return number.substring(0, index);
         }
     }
 }

@@ -19,6 +19,7 @@
 
     <string name="app_name">RPStock</string>
     <string name="enter_email">הכנס כתובת אימייל</string>
+    <string name="enter_employee_number">הכנס מספר עובד</string>
     <string name="enter_password">הכנס סיסמא</string>
     <string name="email">אימייל</string>
     <string name="password">סיסמא</string>

@@ -31,6 +31,8 @@ import java.util.regex.Pattern;
 
 public class UserInfoDialog extends Dialog {
 
+    private static final String EMAIL_SUFFIX = "@RPS.com";
+
     private TextInputLayout emailET;
     private TextInputLayout passwordET;
     private TextInputLayout nameET;
@@ -91,11 +93,13 @@ public class UserInfoDialog extends Dialog {
         @Override
         public void onClick(View v) {
 
-            if (isEmailValid(emailET.getEditText().getText().toString()) && passwordET.getEditText().getText().length() >= 6) {
+            if (passwordET.getEditText().getText().length() >= 6) {
+
+
                 progressBar.setVisibility(View.VISIBLE);
                 final Employee updateEmployee = new Employee(oldEmployee.getID(),
                         nameET.getEditText().getText().toString(),
-                        emailET.getEditText().getText().toString(),
+                        addEmailToEmployeeID(emailET.getEditText().getText().toString()),
                         passwordET.getEditText().getText().toString(),
                         phoneET.getEditText().getText().toString(),
                         isAdminCB.isChecked());
@@ -121,24 +125,13 @@ public class UserInfoDialog extends Dialog {
         }
     };
 
-    public boolean isEmailValid(String email) {
-        String regExpn =
-                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
-                        + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
-                        + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
-                        + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+    public String addEmailToEmployeeID(String number) {
+        return (number.trim() + EMAIL_SUFFIX);
+    }
 
-        CharSequence inputStr = email;
-
-        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
-
-        if (matcher.matches())
-            return true;
-        else
-            return false;
+    public String getIDFromEmail(String number) {
+        int index = number.indexOf('@');
+        return number.substring(0, index);
     }
 
     public static void hideKeyboard(Activity activity) {
