@@ -16,95 +16,88 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Header"
-            android:textSize="22sp">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <TextView
+                android:textDirection="rtl"
+                android:gravity="center"
+                android:text="Item"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/name_of_item" />
 
-                <TextView
-                    android:textDirection="rtl"
-                    android:gravity="center"
-                    android:text="Item"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/name_of_item" />
+            <TextView
+                android:textDirection="rtl"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:id="@+id/diameter_in_item"
+                android:text="@string/diameter" />
 
-                <TextView
-                    android:textDirection="rtl"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:id="@+id/diameter_in_item"
-                    android:text="@string/diameter" />
+            <TextView
+                android:textDirection="rtl"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:id="@+id/kind_in_item"
+                android:text="@string/kind" />
 
-                <TextView
-                    android:textDirection="rtl"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:id="@+id/kind_in_item"
-                    android:text="@string/kind" />
+        </LinearLayout>
 
-            </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <NumberPicker
+                android:scaleX="2.5"
+                android:scaleY="2.5"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:inputType="numberDecimal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="80dp"
+                android:id="@+id/amount" />
 
-                <NumberPicker
-                    android:scaleX="2.5"
-                    android:scaleY="2.5"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:layout_marginTop="10dp"
-                    android:inputType="numberDecimal"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="80dp"
-                    android:id="@+id/amount" />
+            <ImageButton
+                android:paddingVertical="10dp"
+                android:background="@color/red"
+                android:src="@drawable/neg_1"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:id="@+id/decrease_amount" />
 
-                <ImageButton
-                    android:paddingVertical="10dp"
-                    android:background="@color/red"
-                    android:src="@drawable/neg_1"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:id="@+id/decrease_amount" />
-
-                <ImageButton
-                    android:paddingVertical="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/green"
-                    android:src="@drawable/plus_1"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:id="@+id/increase_amount" />
-            </LinearLayout>
-        </TextView>
+            <ImageButton
+                android:paddingVertical="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/green"
+                android:src="@drawable/plus_1"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:id="@+id/increase_amount" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

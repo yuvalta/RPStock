@@ -113,6 +113,12 @@ public class UserStockListAdapter extends RecyclerView.Adapter<UserStockListAdap
                 amountOfItem.setEnabled(false);
             }
 
+            increaseAmount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    changeAmountByValue(item, 1, TYPE_INCR);
+                }
+            });
 
             decreaseAmount.setOnClickListener(new View.OnClickListener() {
                 @Override
