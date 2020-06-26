@@ -6,7 +6,6 @@
     android:layout_marginBottom="10dp"
     android:layout_marginTop="10dp"
     android:layout_marginVertical="5dp"
-    android:background="@color/colorAccent"
     app:cardCornerRadius="5dp"
     android:elevation="8dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -16,45 +15,51 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="vertical"
             android:layout_marginHorizontal="5dp"
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 android:textDirection="rtl"
                 android:gravity="center"
                 android:text="Item"
+                android:textColor="@android:color/black"
                 android:textStyle="bold"
-                android:textSize="20sp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:id="@+id/name_of_item" />
 
             <TextView
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toBottomOf="@id/name_of_item"
+                app:layout_constraintLeft_toLeftOf="parent"
                 android:textDirection="rtl"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 android:textSize="20sp"
                 android:id="@+id/diameter_in_item"
                 android:text="@string/diameter" />
 
             <TextView
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toBottomOf="@id/name_of_item"
+                app:layout_constraintRight_toRightOf="parent"
                 android:textDirection="rtl"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 android:textSize="20sp"
                 android:id="@+id/kind_in_item"
                 android:text="@string/kind" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
             android:layout_width="match_parent"
@@ -71,31 +76,28 @@
                 android:scaleY="2.5"
                 android:textAlignment="center"
                 android:textSize="18sp"
-                android:layout_marginTop="10dp"
                 android:inputType="numberDecimal"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="80dp"
+                android:layout_height="60dp"
                 android:id="@+id/amount" />
 
             <ImageButton
-                android:paddingVertical="10dp"
+                android:paddingVertical="5dp"
                 android:background="@color/red"
                 android:src="@drawable/neg_1"
-                android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="60dp"
                 android:id="@+id/decrease_amount" />
 
             <ImageButton
-                android:paddingVertical="10dp"
-                android:layout_marginTop="10dp"
+                android:paddingVertical="5dp"
                 android:background="@color/green"
                 android:src="@drawable/plus_1"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="60dp"
                 android:id="@+id/increase_amount" />
         </LinearLayout>
     </LinearLayout>

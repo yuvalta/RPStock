@@ -106,7 +106,6 @@ public class ExpandableItemsAdapter extends RecyclerView.Adapter<ExpandableItems
             });
 
 
-
         }
 
         private void getListOfItemsFromEmployee(Employee employee, String headerName) {
@@ -133,8 +132,16 @@ public class ExpandableItemsAdapter extends RecyclerView.Adapter<ExpandableItems
                             return sComp;
                         }
 
-                        String x3 = (o1.getDiameter());
-                        String x4 = (o2.getDiameter());
+                        Double x3 = 0.0;
+                        Double x4 = 0.0;
+                        if (o1.getDiameter().equals("3/4")) {
+                            x3 = 0.75;
+                        } else if (o2.getDiameter().equals("3/4")) {
+                            x4 = 0.75;
+                        } else {
+                            x3 = Double.parseDouble(o1.getDiameter());
+                            x4 = Double.parseDouble(o2.getDiameter());
+                        }
                         return x3.compareTo(x4);
                     }
                 });
@@ -145,7 +152,7 @@ public class ExpandableItemsAdapter extends RecyclerView.Adapter<ExpandableItems
             allItemsRecycler.setHasFixedSize(true);
 
             if (layoutManager == null) {
-                layoutManager = new GridLayoutManager(itemView.getContext(),2);
+                layoutManager = new GridLayoutManager(itemView.getContext(), 2);
             }
             allItemsRecycler.setLayoutManager(layoutManager);
 

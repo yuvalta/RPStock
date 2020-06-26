@@ -86,37 +86,11 @@ public class ItemsListFragment extends Fragment {
         employessList = v.findViewById(R.id.items_recycler_list);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-//        getListFromDB();
         getListOfItemsFromEmployee(employee);
         inflateEmployeesList();
 
         return v;
     }
-
-
-//    private void getListFromDB() {
-//        progressBar.setVisibility(View.VISIBLE);
-//        mDatabase.child("users");
-//        mDatabase.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                items.clear();
-//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                    for (DataSnapshot ds1 : ds.getChildren()) {
-//                        Employee e = ds1.getValue(Employee.class);
-//
-//                        getListOfItemsFromEmployee(e);
-//                    }
-//                }
-//                inflateEmployeesList();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Toast.makeText(getContext(), "Error in loading", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 
     private void getListOfItemsFromEmployee(Employee employee) {
         for (Map.Entry<String, Item> entry : employee.getItems().entrySet()) {
@@ -147,13 +121,11 @@ public class ItemsListFragment extends Fragment {
 
         if (layoutManager == null) {
             layoutManager = new LinearLayoutManager(getContext());
+            employessList.setLayoutManager(layoutManager);
         }
-        employessList.setLayoutManager(layoutManager);
 
         if (mAdapter == null) {
-//            mAdapter = new UserStockListAdapter(items, employee, isAdmin);
             mAdapter = new ExpandableItemsAdapter(itemsHeader, employee, isAdmin);
-
         }
         employessList.setAdapter(mAdapter);
     }

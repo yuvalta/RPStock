@@ -127,7 +127,7 @@ public class ManageEmployeesFragment extends Fragment {
     private void getListFromDB() {
         progressBar.setVisibility(View.VISIBLE);
         mDatabase.child("users");
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 employeeArrayList.clear();
@@ -172,7 +172,7 @@ public class ManageEmployeesFragment extends Fragment {
 
                 progressBar.setVisibility(View.VISIBLE);
 
-                mDatabase.child("users").child(REFERENCE_EMPLOYEE_ID).child("items").addValueEventListener(new ValueEventListener() {
+                mDatabase.child("users").child(REFERENCE_EMPLOYEE_ID).child("items").addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
