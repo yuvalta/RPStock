@@ -87,7 +87,7 @@ public class UserStockListAdapter extends RecyclerView.Adapter<UserStockListAdap
 
         public void bind(final Item item, final int position) {
             diameter = itemView.findViewById(R.id.diameter_in_item);
-            diameter.setText(item.getDiameter());
+            diameter.setText(item.getDiameter()+"\"");
 
             kind = itemView.findViewById(R.id.kind_in_item);
             kind.setText(item.getKind());

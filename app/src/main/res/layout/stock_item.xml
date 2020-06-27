@@ -84,8 +84,8 @@
 
             <ImageButton
                 android:paddingVertical="5dp"
-                android:background="@color/red"
-                android:src="@drawable/neg_1"
+                android:background="@color/colorPrimary"
+                android:src="@drawable/remove_big"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
@@ -93,8 +93,8 @@
 
             <ImageButton
                 android:paddingVertical="5dp"
-                android:background="@color/green"
-                android:src="@drawable/plus_1"
+                android:background="@android:color/white"
+                android:src="@drawable/add_big"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
