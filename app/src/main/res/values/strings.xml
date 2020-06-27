@@ -41,6 +41,7 @@
     <string name="home">מסך ראשי</string>
     <string name="add_new_item">ניהול אביזרים</string>
     <string name="manage_employees">נהל עובדים</string>
+    <string name="all_stock">ניהול מלאי כללי</string>
     <string name="log_out">התנתק</string>
     <string name="enter_name">הכנס שם</string>
     <string name="name">שם</string>
@@ -62,6 +63,9 @@
     <string name="add_item_failed">הוספת אביזר נכשלה</string>
     <string name="employee_updated">פרטי עובד עודכנו</string>
     <string name="error">תקלה</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

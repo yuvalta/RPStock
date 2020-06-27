@@ -16,6 +16,9 @@
         android:title="@string/manage_employees"
         android:id="@+id/menu_manage" />
     <item
+        android:title="@string/all_stock"
+        android:id="@+id/all_stock_select" />
+    <item
         android:title="@string/log_out"
         android:id="@+id/log_out" />
 </menu>

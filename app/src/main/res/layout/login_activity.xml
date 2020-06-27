@@ -87,6 +87,7 @@
             android:background="@drawable/button_background" />
 
         <ProgressBar
+            android:indeterminateTint="@color/colorPrimaryDark"
             android:layout_gravity="center"
             android:visibility="gone"
             android:layout_marginTop="10dp"

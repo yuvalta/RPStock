@@ -107,6 +107,7 @@
         android:layout_margin="5dp" />
 
     <ProgressBar
+        android:indeterminateTint="@color/colorPrimaryDark"
         android:visibility="gone"
         android:layout_gravity="center_horizontal"
         android:layout_width="70dp"

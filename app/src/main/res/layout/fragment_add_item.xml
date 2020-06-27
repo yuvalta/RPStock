@@ -130,6 +130,7 @@
             android:id="@+id/items_list" />
 
         <ProgressBar
+            android:indeterminateTint="@color/colorPrimaryDark"
             android:id="@+id/add_item_progress"
             android:layout_gravity="center_horizontal"
             android:layout_width="70dp"

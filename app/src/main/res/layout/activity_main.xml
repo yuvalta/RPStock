@@ -38,6 +38,7 @@
             android:layout_below="@id/user_name">
 
                 <ProgressBar
+                    android:indeterminateTint="@color/colorPrimaryDark"
                     android:id="@+id/main_progress"
                     android:layout_gravity="center"
                     android:layout_width="70dp"
