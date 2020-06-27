@@ -96,11 +96,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    mDataset.remove(holder.itemView);
-                                                    mDataset.remove(position);
-                                                    notifyItemRemoved(position);
-
-                                                    removeUserFromAuth(holder.itemView.getContext());
+                                                    removeUser(holder, position);
                                                 }
                                             }).addOnFailureListener(new OnFailureListener() {
                                         @Override
@@ -126,23 +122,12 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
         }
     }
 
-    private void removeUserFromAuth(final Context context) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private void removeUser(MyViewHolder holder, int position) {
+        mDataset.remove(holder.itemView);
+        mDataset.remove(position);
+        notifyItemRemoved(position);
 
-        user.delete()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
-            }
-        });
+        Toast.makeText(holder.itemView.getContext(), "Deleted!", Toast.LENGTH_SHORT).show();
     }
 
     public String getIDFromEmail(String number) {

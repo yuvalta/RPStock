@@ -78,6 +78,7 @@
 
         <TextView
             android:textDirection="rtl"
+            android:inputType="textPassword"
             android:gravity="center_vertical"
             android:textSize="18sp"
             android:layout_weight="1"
