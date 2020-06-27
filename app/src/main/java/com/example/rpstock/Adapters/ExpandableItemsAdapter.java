@@ -124,13 +124,13 @@ public class ExpandableItemsAdapter extends RecyclerView.Adapter<ExpandableItems
                 items.sort(new Comparator<Item>() {
                     @Override
                     public int compare(Item o1, Item o2) {
-                        String x1 = o1.getKind();
-                        String x2 = o2.getKind();
-                        int sComp = x1.compareTo(x2);
-
-                        if (sComp != 0) {
-                            return sComp;
-                        }
+//                        String x1 = o1.getKind();
+//                        String x2 = o2.getKind();
+//                        int sComp = x1.compareTo(x2);
+//
+//                        if (sComp != 0) {
+//                            return sComp;
+//                        }
 
                         Double x3 = 0.0;
                         Double x4 = 0.0;
@@ -142,7 +142,7 @@ public class ExpandableItemsAdapter extends RecyclerView.Adapter<ExpandableItems
                             x3 = Double.parseDouble(o1.getDiameter());
                             x4 = Double.parseDouble(o2.getDiameter());
                         }
-                        return x3.compareTo(x4);
+                        return x4.compareTo(x3);
                     }
                 });
             }

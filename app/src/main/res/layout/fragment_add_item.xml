@@ -20,6 +20,11 @@
             android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter SEQ"
+        android:id="@+id/item_seq"/>
 
     <LinearLayout
         android:textDirection="rtl"
@@ -74,6 +79,33 @@
             android:layout_height="wrap_content"
             android:paddingVertical="15dp"
             android:id="@+id/item_diameter_ET" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:textDirection="rtl"
+        android:gravity="right"
+        android:layout_gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textSize="16sp"
+            android:textDirection="rtl"
+            android:gravity="center_vertical"
+            android:layout_gravity="right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/nipple_length"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:layout_weight="2"
+            android:prompt="@string/nipple_length"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="15dp"
+            android:id="@+id/item_nipple_length" />
     </LinearLayout>
 
     <Button

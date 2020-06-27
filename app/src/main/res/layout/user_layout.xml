@@ -62,7 +62,7 @@
         android:hint="@string/enter_password">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:inputType="text"
+            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -78,7 +78,6 @@
 
         <TextView
             android:textDirection="rtl"
-            android:inputType="textPassword"
             android:gravity="center_vertical"
             android:textSize="18sp"
             android:layout_weight="1"

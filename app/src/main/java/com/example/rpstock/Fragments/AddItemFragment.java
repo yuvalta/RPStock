@@ -50,14 +50,17 @@ public class AddItemFragment extends Fragment {
     private String mParam2;
 
     TextInputLayout itemName;
+    EditText seqET;
     Spinner itemDiameter;
     Spinner itemKind;
+    Spinner itemNippleLength;
     Button addItemButton;
 
     ProgressBar progressBar;
 
     private String kindSelected;
     private String diameterSelected;
+    private String lengthSelected;
 
     Employee currentEmployee;
 
@@ -103,6 +106,9 @@ public class AddItemFragment extends Fragment {
         itemName = view.findViewById(R.id.item_name_ET);
         itemKind = view.findViewById(R.id.item_kind_ET);
         itemDiameter = view.findViewById(R.id.item_diameter_ET);
+        itemNippleLength = view.findViewById(R.id.item_nipple_length);
+
+        seqET = view.findViewById(R.id.item_seq);
 
         addItemButton = view.findViewById(R.id.add_item_button);
 
@@ -111,10 +117,9 @@ public class AddItemFragment extends Fragment {
 
         setKindSpinner(view.getContext());
         setDiameterSpinner(view.getContext());
-
+        setItemNippleLengthSpinner(view.getContext());
 
         getListFromDB();
-
 
         return view;
     }
@@ -146,6 +151,24 @@ public class AddItemFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 diameterSelected = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void setItemNippleLengthSpinner(Context context) {
+        ArrayAdapter<CharSequence> adapterDiameter = ArrayAdapter.createFromResource(context,
+                R.array.length_array, android.R.layout.simple_spinner_item);
+        adapterDiameter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        itemNippleLength.setAdapter(adapterDiameter);
+        itemNippleLength.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                lengthSelected = parent.getItemAtPosition(position).toString();
             }
 
             @Override
@@ -222,7 +245,9 @@ public class AddItemFragment extends Fragment {
                     0,
                     diameterSelected,
                     kindSelected,
-                    String.valueOf(UUID.randomUUID()));
+                    String.valueOf(UUID.randomUUID()),
+                    Integer.parseInt(seqET.getText().toString()),
+                    lengthSelected);
 
 
             for (String employeeKey : employeeIDArrayList) {
@@ -235,7 +260,6 @@ public class AddItemFragment extends Fragment {
 
                                 itemsArrayList.add(newItem);
 
-                                //getListFromDB();
 //                                Toast.makeText(getActivity(), R.string.item_added_suc, Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {

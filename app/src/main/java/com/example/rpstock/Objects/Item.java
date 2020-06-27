@@ -5,19 +5,23 @@ public class Item {
 
     private String name;
     private int amount;
+    private int seq;
     private String diameter;
     private String kind;
     private String ID;
+    private String nippleLength;
 
     public Item() {
     }
 
-    public Item(String _name, int _amount, String _diameter, String _kind, String _ID) {
+    public Item(String _name, int _amount, String _diameter, String _kind, String _ID, int _seq, String _nippleLength) {
         this.name = _name;
         this.amount = _amount;
         this.kind = _kind;
         this.diameter = _diameter;
         this.ID = _ID;
+        this.seq = _seq;
+        this.nippleLength = _nippleLength;
     }
 
     public String getDiameter() {
@@ -58,5 +62,21 @@ public class Item {
 
     public void setID(String ID) {
         this.ID = ID;
+    }
+
+    public int getSeq() {
+        return seq;
+    }
+
+    public void setSeq(int seq) {
+        this.seq = seq;
+    }
+
+    public String getNippleLength() {
+        return nippleLength;
+    }
+
+    public void setNippleLength(String nippleLength) {
+        this.nippleLength = nippleLength;
     }
 }

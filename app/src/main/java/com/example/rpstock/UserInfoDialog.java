@@ -72,6 +72,7 @@ public class UserInfoDialog extends Dialog {
 
     private void setTextInET() {
         emailET.getEditText().setText(oldEmployee.getEmail());
+        emailET.setEnabled(false);
         passwordET.getEditText().setText(oldEmployee.getPassword());
         nameET.getEditText().setText(oldEmployee.getName());
         phoneET.getEditText().setText(oldEmployee.getPhone());
