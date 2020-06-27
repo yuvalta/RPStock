@@ -1,5 +1,6 @@
 package com.example.rpstock.Adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,8 @@ import com.example.rpstock.UserInfoDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
@@ -26,6 +29,9 @@ import java.util.ArrayList;
 public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyViewHolder> {
     private ArrayList<Employee> mDataset;
     private AdapterView.OnItemClickListener listener;
+
+    public TextView name, password, email, phone;
+    public ImageButton options;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name, password, email, phone;
@@ -38,58 +44,6 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
             password = view.findViewById(R.id.item_kind);
             phone = view.findViewById(R.id.item_amount);
             options = view.findViewById(R.id.item_options);
-        }
-
-        public void bind(final Employee item, final int position) {
-
-            name.setText(item.getName());
-            email.setText(getIDFromEmail(item.getEmail()));
-            password.setText(item.getPassword());
-            phone.setText(item.getPhone());
-
-            if (position != 0) { // user can't delete first employee because i use it to get list of items
-                options.setVisibility(View.VISIBLE);
-                options.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        PopupMenu popup = new PopupMenu(v.getContext(), options);
-                        popup.inflate(R.menu.employees_item_menu);
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem menuItem) {
-                                switch (menuItem.getItemId()) {
-                                    case R.id.menu_delete:
-                                        //TODO: delete users also from auth
-                                        FirebaseDatabase.getInstance().getReference()
-                                                .child("users").child(item.getID()).removeValue()
-                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                        Toast.makeText(itemView.getContext(), "Deleted!", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(itemView.getContext(), "Failed!", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                                        return true;
-                                    case R.id.menu_update:
-                                        UserInfoDialog dialog = new UserInfoDialog(itemView.getContext(), item);
-                                        dialog.show();
-
-                                        return true;
-                                    default:
-                                        return false;
-                                }
-                            }
-                        });
-                        popup.show();
-                    }
-                });
-
-            }
-
         }
 
         public String getIDFromEmail(String number) {
@@ -108,13 +62,77 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem = layoutInflater.inflate(R.layout.employee_item, parent, false);
 
+        name = listItem.findViewById(R.id.name);
+        email = listItem.findViewById(R.id.item_diameter);
+        password = listItem.findViewById(R.id.item_kind);
+        phone = listItem.findViewById(R.id.item_amount);
+        options = listItem.findViewById(R.id.item_options);
+
         MyViewHolder vh = new MyViewHolder(listItem);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.bind(mDataset.get(position), position);
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        name.setText(mDataset.get(position).getName());
+        email.setText(getIDFromEmail(mDataset.get(position).getEmail()));
+        password.setText(mDataset.get(position).getPassword());
+        phone.setText(mDataset.get(position).getPhone());
+
+        if (position != 0) { // user can't delete first employee because i use it to get list of items
+            options.setVisibility(View.VISIBLE);
+            options.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popup = new PopupMenu(holder.itemView.getContext(), options);
+                    popup.inflate(R.menu.employees_item_menu);
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            switch (menuItem.getItemId()) {
+                                case R.id.menu_delete:
+                                    FirebaseDatabase.getInstance().getReference()
+                                            .child("users").child(mDataset.get(position).getID()).removeValue()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    removeUser(holder, position);
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(holder.itemView.getContext(), "Failed!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    return true;
+                                case R.id.menu_update:
+                                    UserInfoDialog dialog = new UserInfoDialog(holder.itemView.getContext(), mDataset.get(position));
+                                    dialog.show();
+
+                                    return true;
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
+                    popup.show();
+                }
+            });
+
+        }
+    }
+
+    private void removeUser(MyViewHolder holder, int position) {
+        mDataset.remove(holder.itemView);
+        mDataset.remove(position);
+        notifyItemRemoved(position);
+
+        Toast.makeText(holder.itemView.getContext(), "Deleted!", Toast.LENGTH_SHORT).show();
+    }
+
+    public String getIDFromEmail(String number) {
+        int index = number.indexOf('@');
+        return number.substring(0, index);
     }
 
 

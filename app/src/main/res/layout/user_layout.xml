@@ -78,6 +78,7 @@
 
         <TextView
             android:textDirection="rtl"
+            android:inputType="textPassword"
             android:gravity="center_vertical"
             android:textSize="18sp"
             android:layout_weight="1"
@@ -108,8 +109,7 @@
 
     <ProgressBar
         android:visibility="gone"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/signin_button"
+        android:layout_gravity="center_horizontal"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:indeterminate="true"

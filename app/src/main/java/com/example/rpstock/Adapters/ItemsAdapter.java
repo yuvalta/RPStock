@@ -25,7 +25,7 @@ import static com.google.firebase.database.FirebaseDatabase.getInstance;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder> {
 
-    private ArrayList<Item> mDataset;
+    public ArrayList<Item> mDataset;
     private ArrayList<String> employeesIDArrayList;
 
 
@@ -63,21 +63,19 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
             deleteItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    progressBar.setVisibility(View.VISIBLE);
-                    DatabaseReference mDatabase = getInstance().getReference();
+                    final DatabaseReference mDatabase = getInstance().getReference();
                     for (String employeeKey : employeeList) {
                         mDatabase.child("users").child(employeeKey).child("items").child(item.getID()).removeValue()
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        Toast.makeText(itemView.getContext(), R.string.deleted_item, Toast.LENGTH_SHORT).show();
-//                                        progressBar.setVisibility(View.GONE);
+//                                        Toast.makeText(itemView.getContext(), R.string.deleted_item, Toast.LENGTH_SHORT).show();
+
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(itemView.getContext(), R.string.delete_item_falied, Toast.LENGTH_SHORT).show();
-//                                progressBar.setVisibility(View.GONE);
                             }
                         });
                     }

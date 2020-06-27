@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.rpstock.Adapters.AdminMainAdapter;
+import com.example.rpstock.Adapters.ExpandableItemsAdapter;
 import com.example.rpstock.Adapters.UserStockListAdapter;
 import com.example.rpstock.Objects.Employee;
 import com.example.rpstock.Objects.Item;
@@ -42,6 +43,7 @@ public class ItemsListFragment extends Fragment {
     private DatabaseReference mDatabase;
 
     private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<String> itemsHeader = new ArrayList<>();
     private Employee employee;
     private RecyclerView employessList;
     private RecyclerView.Adapter mAdapter;
@@ -84,36 +86,10 @@ public class ItemsListFragment extends Fragment {
         employessList = v.findViewById(R.id.items_recycler_list);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-//        getListFromDB();
         getListOfItemsFromEmployee(employee);
         inflateEmployeesList();
 
         return v;
-    }
-
-
-    private void getListFromDB() {
-//        progressBar.setVisibility(View.VISIBLE);
-        mDatabase.child("users");
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                items.clear();
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    for (DataSnapshot ds1 : ds.getChildren()) {
-                        Employee e = ds1.getValue(Employee.class);
-
-                        getListOfItemsFromEmployee(e);
-                    }
-                }
-                inflateEmployeesList();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(), "Error in loading", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void getListOfItemsFromEmployee(Employee employee) {
@@ -125,6 +101,10 @@ public class ItemsListFragment extends Fragment {
             item.setKind(entry.getValue().getKind());
             item.setDiameter(entry.getValue().getDiameter());
             items.add(item);
+
+            if (!itemsHeader.contains(entry.getValue().getName())) {
+                itemsHeader.add(entry.getValue().getName());
+            }
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             items.sort(new Comparator<Item>() {
@@ -141,11 +121,11 @@ public class ItemsListFragment extends Fragment {
 
         if (layoutManager == null) {
             layoutManager = new LinearLayoutManager(getContext());
+            employessList.setLayoutManager(layoutManager);
         }
-        employessList.setLayoutManager(layoutManager);
 
         if (mAdapter == null) {
-            mAdapter = new UserStockListAdapter(items, employee, isAdmin);
+            mAdapter = new ExpandableItemsAdapter(itemsHeader, employee, isAdmin);
         }
         employessList.setAdapter(mAdapter);
     }

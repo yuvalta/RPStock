@@ -113,11 +113,19 @@ public class UserStockListAdapter extends RecyclerView.Adapter<UserStockListAdap
                 amountOfItem.setEnabled(false);
             }
 
+            increaseAmount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    changeAmountByValue(item, 1, TYPE_INCR);
+                }
+            });
 
             decreaseAmount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    changeAmountByValue(item, -1, TYPE_DECR);
+                    if (amountOfItem.getValue() - 1 >= 0) {
+                        changeAmountByValue(item, -1, TYPE_DECR);
+                    }
                 }
             });
 
@@ -145,16 +153,7 @@ public class UserStockListAdapter extends RecyclerView.Adapter<UserStockListAdap
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                long value;
-                                if (type == TYPE_INCR || type == TYPE_DECR) {
-                                    value = (long) dataSnapshot.getValue();
-                                    value = value + i;
-                                    dataSnapshot.getRef().setValue(value);
-                                } else {
-                                    value = i;
-                                    dataSnapshot.getRef().setValue(value);
-                                }
-                                amountOfItem.setValue((int) value);
+                                updateValues(dataSnapshot, i, type);
                             }
 
                             @Override
@@ -165,6 +164,19 @@ public class UserStockListAdapter extends RecyclerView.Adapter<UserStockListAdap
             } catch (Exception e) {
                 Toast.makeText(itemView.getContext(), "שגיאה, נסה שנית", Toast.LENGTH_SHORT).show();
             }
+        }
+
+        private void updateValues(DataSnapshot dataSnapshot, int i, final int type) {
+            long value;
+            if (type == TYPE_INCR || type == TYPE_DECR) {
+                value = (long) dataSnapshot.getValue();
+                value = value + i;
+                dataSnapshot.getRef().setValue(value);
+            } else {
+                value = i;
+                dataSnapshot.getRef().setValue(value);
+            }
+            amountOfItem.setValue((int) value);
         }
     }
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:elevation="8dp"
+    app:cardCornerRadius="5dp"
+    app:cardBackgroundColor="@color/colorAccent"
+    android:layout_marginVertical="5dp"
+    android:layout_marginHorizontal="5dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <LinearLayout
+            android:id="@+id/open_close_items_LL"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/drop_down_arrow"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/arrow_down" />
+
+            <TextView
+                android:textDirection="rtl"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="15dp"
+                android:id="@+id/items_header_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Name"
+                android:textStyle="bold"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
+            android:clickable="false"
+            android:id="@+id/items_header_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -74,7 +74,6 @@ public class AdminMainFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_admin_main, container, false);
 
         employessList = v.findViewById(R.id.employee_items_recycler);
-//        progressBar = v.findViewById(R.id.admin_progress);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -84,9 +83,8 @@ public class AdminMainFragment extends Fragment {
     }
 
     private void getListFromDB() {
-//        progressBar.setVisibility(View.VISIBLE);
         mDatabase.child("users");
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 employees.clear();
@@ -110,16 +108,11 @@ public class AdminMainFragment extends Fragment {
     private void inflateEmployeesList() {
         employessList.setHasFixedSize(true);
 
-//        if (layoutManager == null) {
-//            layoutManager = new GridLayoutManager(getContext(), 2);
-//        }
         employessList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         if (mAdapter == null) {
             mAdapter = new AdminMainAdapter(employees);
         }
         employessList.setAdapter(mAdapter);
-
-//        progressBar.setVisibility(View.GONE);
     }
 }

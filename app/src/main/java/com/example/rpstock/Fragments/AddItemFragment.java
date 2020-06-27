@@ -232,7 +232,11 @@ public class AddItemFragment extends Fragment {
                             public void onComplete(@NonNull Task<Void> task) {
                                 itemName.getEditText().setText("");
                                 progressBar.setVisibility(View.GONE);
-                                Toast.makeText(getActivity(), R.string.item_added_suc, Toast.LENGTH_SHORT).show();
+
+                                itemsArrayList.add(newItem);
+
+                                //getListFromDB();
+//                                Toast.makeText(getActivity(), R.string.item_added_suc, Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override

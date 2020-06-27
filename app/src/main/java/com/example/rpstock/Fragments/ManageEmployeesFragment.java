@@ -121,13 +121,15 @@ public class ManageEmployeesFragment extends Fragment {
 
         getListFromDB();
 
+
+
         return view;
     }
 
     private void getListFromDB() {
         progressBar.setVisibility(View.VISIBLE);
         mDatabase.child("users");
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 employeeArrayList.clear();
@@ -168,7 +170,6 @@ public class ManageEmployeesFragment extends Fragment {
         public void onClick(View v) {
 
             if (passwordET.getEditText().getText().length() >= 6) {
-
 
                 progressBar.setVisibility(View.VISIBLE);
 
@@ -220,8 +221,8 @@ public class ManageEmployeesFragment extends Fragment {
 
                 FirebaseAuth.getInstance().signOut();
 
-                progressBar.setVisibility(View.INVISIBLE);
-
+                progressBar.setVisibility(View.GONE);
+                employeeArrayList.add(newEmployee);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -232,6 +233,7 @@ public class ManageEmployeesFragment extends Fragment {
             @Override
             public void onSuccess(AuthResult authResult) {
                 displayErrorSnackbar("משתמש נוסף בהצלחה", getView());
+
 
                 resetAllET();
             }

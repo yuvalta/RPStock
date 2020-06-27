@@ -77,8 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getCurrentUserDataFromDB() {
         usersDatabaseRef = database.getReference("users");
-//        usersDatabaseRef.orderByChild("email").equalTo(userEmail).addValueEventListener(new ValueEventListener() {
-        usersDatabaseRef.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
+        usersDatabaseRef.child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
