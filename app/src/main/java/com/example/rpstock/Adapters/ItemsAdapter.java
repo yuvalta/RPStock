@@ -25,7 +25,7 @@ import static com.google.firebase.database.FirebaseDatabase.getInstance;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder> {
 
-    private ArrayList<Item> mDataset;
+    public ArrayList<Item> mDataset;
     private ArrayList<String> employeesIDArrayList;
 
 
@@ -63,7 +63,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
             deleteItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DatabaseReference mDatabase = getInstance().getReference();
+                    final DatabaseReference mDatabase = getInstance().getReference();
                     for (String employeeKey : employeeList) {
                         mDatabase.child("users").child(employeeKey).child("items").child(item.getID()).removeValue()
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {

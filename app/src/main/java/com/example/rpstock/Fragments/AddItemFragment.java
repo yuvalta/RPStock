@@ -158,7 +158,7 @@ public class AddItemFragment extends Fragment {
     private void getListFromDB() {
         progressBar.setVisibility(View.VISIBLE);
         mDatabase.child("users");
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 itemsArrayList.clear();
@@ -232,7 +232,10 @@ public class AddItemFragment extends Fragment {
                             public void onComplete(@NonNull Task<Void> task) {
                                 itemName.getEditText().setText("");
                                 progressBar.setVisibility(View.GONE);
-                                getListFromDB();
+
+                                itemsArrayList.add(newItem);
+
+                                //getListFromDB();
 //                                Toast.makeText(getActivity(), R.string.item_added_suc, Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
