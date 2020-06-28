@@ -120,26 +120,21 @@ public class ExpandableItemsAdapter extends RecyclerView.Adapter<ExpandableItems
                     items.add(item);
                 }
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                items.sort(new Comparator<Item>() {
-                    @Override
-                    public int compare(Item o1, Item o2) {
-
-                        Double x3 = 0.0;
-                        Double x4 = 0.0;
-                        if (o1.getDiameter().equals("3/4")) {
-                            x3 = 0.75;
-                        } else if (o2.getDiameter().equals("3/4")) {
-                            x4 = 0.75;
-                        } else {
-                            x3 = Double.parseDouble(o1.getDiameter());
-                            x4 = Double.parseDouble(o2.getDiameter());
-                        }
-                        return x4.compareTo(x3);
-                    }
-                });
-            }
+//            sortArrayBySeq();
         }
+
+//        private void sortArrayBySeq() {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                items.sort(new Comparator<Item>() {
+//                    @Override
+//                    public int compare(Item o1, Item o2) {
+//                        Integer x1 = o1.getSeq();
+//                        Integer x2 = o2.getSeq();
+//                        return x1.compareTo(x2);
+//                    }
+//                });
+//            }
+//        }
 
         private void inflateEmployeesList() {
             allItemsRecycler.setHasFixedSize(true);

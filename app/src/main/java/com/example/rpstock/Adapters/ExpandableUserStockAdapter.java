@@ -1,6 +1,7 @@
 package com.example.rpstock.Adapters;
 
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,6 +124,7 @@ public class ExpandableUserStockAdapter extends RecyclerView.Adapter<ExpandableU
                         items.add(e);
 
                     }
+                    sortArrayBySeq();
                     inflateEmployeesList();
                 }
 
@@ -131,6 +133,21 @@ public class ExpandableUserStockAdapter extends RecyclerView.Adapter<ExpandableU
                     Toast.makeText(itemView.getContext(), "Error in loading", Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+
+        private void sortArrayBySeq() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+                items.sort(new Comparator<Item>() {
+                    @Override
+                    public int compare(Item o1, Item o2) {
+                        Integer x1 = o1.getSeq();
+                        Integer x2 = o2.getSeq();
+                        Log.d("comapre", x1 + " " + x2);
+                        return x1.compareTo(x2);
+                    }
+                });
+            }
         }
 
         private void inflateEmployeesList() {
