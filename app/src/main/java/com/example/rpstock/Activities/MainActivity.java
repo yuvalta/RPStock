@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
 
         if (isAdmin) {
-            fragmentTransaction.replace(R.id.fragment_frame, new AllStockFragment(), "home");
+            fragmentTransaction.replace(R.id.fragment_frame, new AllStockFragment(), "all_stock");
         } else {
             fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(currentEmployeeUser, isAdmin), "home");
         }
@@ -134,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        fragmentManager.popBackStack();
 
         switch (item.getItemId()) {
             case R.id.menu_home_user: {
@@ -142,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!checkIfFragmentInBackStack("home") && !checkIfFragmentInBackStack("admin_home")) {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
+                    fragmentManager.popBackStack();
 
                     fragmentTransaction.replace(R.id.fragment_frame, new ItemsListFragment(currentEmployeeUser, false), "home")
                             .addToBackStack(null).commit();
@@ -149,10 +149,13 @@ public class MainActivity extends AppCompatActivity {
 
                 return true;
             }
-            case R.id.menu_home_admin: {
+            case R.id.update_stock: {
 
-                if (!checkIfFragmentInBackStack("home") && !checkIfFragmentInBackStack("admin_home")) {
+                if (!checkIfFragmentInBackStack("admin_home")) {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    fragmentManager.popBackStack();
+
                     fragmentTransaction.replace(R.id.fragment_frame, new AdminMainFragment(), "admin_home")
                             .addToBackStack(null).commit();
                 }
@@ -162,6 +165,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_manage: {
                 if (!checkIfFragmentInBackStack("manage_employees")) {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    fragmentManager.popBackStack();
+
                     fragmentTransaction.replace(R.id.fragment_frame, new ManageEmployeesFragment(), "manage_employees")
                             .addToBackStack(null).commit();
                 }
@@ -170,6 +176,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.all_stock_select: {
                 if (!checkIfFragmentInBackStack("all_stock")) {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    fragmentManager.popBackStack();
+
                     fragmentTransaction.replace(R.id.fragment_frame, new AllStockFragment(), "all_stock")
                             .addToBackStack(null).commit();
                 }
@@ -179,6 +188,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_items: {
                 if (!checkIfFragmentInBackStack("add_item")) {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    fragmentManager.popBackStack();
+
                     fragmentTransaction.replace(R.id.fragment_frame, new AddItemFragment(), "add_item")
                             .addToBackStack(null).commit();
                 }
@@ -196,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+
     }
 
     private boolean checkIfFragmentInBackStack(String tag) {

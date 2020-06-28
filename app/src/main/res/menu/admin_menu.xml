@@ -5,8 +5,12 @@
     android:layout_gravity="start">
 
     <item
-        android:title="@string/home"
-        android:id="@+id/menu_home_admin" />
+        android:title="@string/all_stock"
+        android:id="@+id/all_stock_select" />
+
+    <item
+        android:title="@string/update_stock_employee"
+        android:id="@+id/update_stock" />
 
     <item
         android:title="@string/add_new_item"
@@ -16,9 +20,7 @@
         android:title="@string/manage_employees"
         android:id="@+id/menu_manage" />
     <item
-        android:title="@string/all_stock"
-        android:id="@+id/all_stock_select" />
-    <item
         android:title="@string/log_out"
         android:id="@+id/log_out" />
+
 </menu>

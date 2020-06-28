@@ -39,6 +39,7 @@
     <string name="password">סיסמא</string>
     <string name="sign_in">היכנס</string>
     <string name="home">מסך ראשי</string>
+    <string name="update_stock_employee">עדכן מלאי לעובדים</string>
     <string name="add_new_item">ניהול אביזרים</string>
     <string name="manage_employees">נהל עובדים</string>
     <string name="all_stock">ניהול מלאי כללי</string>
