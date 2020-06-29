@@ -227,7 +227,7 @@ public class AddItemFragment extends Fragment {
 
                     Integer x1 = o1.getSeq();
                     Integer x2 = o2.getSeq();
-                    return x2.compareTo(x1);
+                    return x1.compareTo(x2);
                 }
             });
         }

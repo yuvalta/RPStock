@@ -1,5 +1,7 @@
 package com.example.rpstock.Adapters;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rpstock.Objects.Item;
@@ -62,23 +65,37 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
             deleteItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final DatabaseReference mDatabase = getInstance().getReference();
-                    for (String employeeKey : employeeList) {
-                        mDatabase.child("users").child(employeeKey).child("items").child(item.getID()).removeValue()
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(itemView.getContext());
+                    alertDialog.setMessage("האם אתה בטוח שאת/ה רוצה למחוק אביזר זה?")
+                            .setPositiveButton("מחק", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    deleteItemFromDB(item, employeeList);
+                                }
+                            })
+                            .setNegativeButton("בטל מחיקה", null)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
 
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(itemView.getContext(), R.string.delete_item_falied, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
                 }
             });
+        }
+
+        private void deleteItemFromDB(final Item item, final ArrayList<String> employeeList) {
+            final DatabaseReference mDatabase = getInstance().getReference();
+            for (String employeeKey : employeeList) {
+                mDatabase.child("users").child(employeeKey).child("items").child(item.getID()).removeValue()
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(itemView.getContext(), R.string.delete_item_falied, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         }
     }
 

@@ -54,7 +54,13 @@ public class AllUserStockListAdapter extends RecyclerView.Adapter<AllUserStockLi
         diameter.setText(listItems.get(position).getDiameter());
 
         kind = holder.itemView.findViewById(R.id.kind_of_item_stock);
-        kind.setText(listItems.get(position).getKind());
+
+        String nippleLength = listItems.get(position).getNippleLength();
+        if (nippleLength.equals("ללא")) {
+            kind.setText(listItems.get(position).getKind());
+        } else {
+            kind.setText(nippleLength);
+        }
 
         name = holder.itemView.findViewById(R.id.name_of_item_stock);
         name.setText(listItems.get(position).getName());

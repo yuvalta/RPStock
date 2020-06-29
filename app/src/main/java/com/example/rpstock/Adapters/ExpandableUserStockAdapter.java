@@ -144,7 +144,7 @@ public class ExpandableUserStockAdapter extends RecyclerView.Adapter<ExpandableU
                         Integer x1 = o1.getSeq();
                         Integer x2 = o2.getSeq();
                         Log.d("comapre", x1 + " " + x2);
-                        return x1.compareTo(x2);
+                        return x2.compareTo(x1);
                     }
                 });
             }
