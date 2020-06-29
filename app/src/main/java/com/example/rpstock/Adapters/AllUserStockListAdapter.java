@@ -62,11 +62,9 @@ public class AllUserStockListAdapter extends RecyclerView.Adapter<AllUserStockLi
         amountOfItem = holder.itemView.findViewById(R.id.amount_of_item_stock);
         amountOfItem.setText(String.valueOf(listItems.get(position).getAmount()));
         if (listItems.get(position).getAmount() < MIN_VALUE_ALERT) {
-            amountOfItem.setBackgroundColor(Color.RED);
-        }
-        else {
-//            Color.parseColor("#FF0000")
-            amountOfItem.setBackgroundColor(Color.GREEN);
+            amountOfItem.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.red));
+        } else {
+            amountOfItem.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.green));
         }
 
     }

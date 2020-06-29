@@ -2,6 +2,7 @@ package com.example.rpstock.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -215,9 +217,20 @@ public class AddItemFragment extends Fragment {
             item.setKind(employeeItem.getValue().getKind());
             item.setDiameter(employeeItem.getValue().getDiameter());
             item.setID(employeeItem.getValue().getID());
+            item.setSeq(employeeItem.getValue().getSeq());
             itemsArrayList.add(item);
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            itemsArrayList.sort(new Comparator<Item>() {
+                @Override
+                public int compare(Item o1, Item o2) {
 
+                    Integer x1 = o1.getSeq();
+                    Integer x2 = o2.getSeq();
+                    return x2.compareTo(x1);
+                }
+            });
+        }
     }
 
     private void inflateAllItemsList() {

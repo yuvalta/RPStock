@@ -17,7 +17,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -38,16 +37,16 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
         private TextView itemName;
         private TextView itemKind;
         private TextView itemDiameter;
-        private TextView itemAmount;
+        private TextView itemSeq;
         ProgressBar progressBar;
         ImageView deleteItem;
 
         public MyViewHolder(View view) {
             super(view);
-            itemName = view.findViewById(R.id.item_name);
-            itemDiameter = view.findViewById(R.id.item_diameter);
-            itemKind = view.findViewById(R.id.item_kind);
-            itemAmount = view.findViewById(R.id.item_amount);
+            itemName = view.findViewById(R.id.item_item_name);
+            itemDiameter = view.findViewById(R.id.item_item_diameter);
+            itemKind = view.findViewById(R.id.item_item_kind);
+            itemSeq = view.findViewById(R.id.item_item_seq);
             deleteItem = view.findViewById(R.id.item_options);
             progressBar = view.findViewById(R.id.add_item_progress);
 
@@ -58,7 +57,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
             itemName.setText(item.getName());
             itemKind.setText(item.getKind());
             itemDiameter.setText(item.getDiameter());
-            itemAmount.setText(String.valueOf(item.getAmount()));
+            itemSeq.setText(String.valueOf(item.getSeq()));
 
             deleteItem.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -69,7 +68,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-//                                        Toast.makeText(itemView.getContext(), R.string.deleted_item, Toast.LENGTH_SHORT).show();
 
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
