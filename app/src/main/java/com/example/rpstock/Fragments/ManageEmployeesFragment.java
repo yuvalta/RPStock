@@ -122,7 +122,6 @@ public class ManageEmployeesFragment extends Fragment {
         getListFromDB();
 
 
-
         return view;
     }
 
@@ -137,7 +136,9 @@ public class ManageEmployeesFragment extends Fragment {
                     for (DataSnapshot ds1 : ds.getChildren()) {
                         Employee e = ds1.getValue(Employee.class);
 
-                        employeeArrayList.add(e);
+                        if (!e.getID().equals(REFERENCE_EMPLOYEE_ID)) { // insert all users accept items reference user
+                            employeeArrayList.add(e);
+                        }
                     }
                 }
                 inflateEmployeesList();
@@ -222,6 +223,7 @@ public class ManageEmployeesFragment extends Fragment {
                 FirebaseAuth.getInstance().signOut();
 
                 progressBar.setVisibility(View.GONE);
+
                 employeeArrayList.add(newEmployee);
             }
         }).addOnFailureListener(new OnFailureListener() {

@@ -51,6 +51,8 @@ public class AddItemFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private static final int LAST_SEQ = 130;
+
     TextInputLayout itemName;
     EditText seqET;
     Spinner itemDiameter;
@@ -218,6 +220,7 @@ public class AddItemFragment extends Fragment {
             item.setDiameter(employeeItem.getValue().getDiameter());
             item.setID(employeeItem.getValue().getID());
             item.setSeq(employeeItem.getValue().getSeq());
+            item.setNippleLength(employeeItem.getValue().getNippleLength());
             itemsArrayList.add(item);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -259,7 +262,8 @@ public class AddItemFragment extends Fragment {
                     diameterSelected,
                     kindSelected,
                     String.valueOf(UUID.randomUUID()),
-                    Integer.parseInt(seqET.getText().toString()),
+//                    Integer.parseInt(seqET.getText().toString()), // you can uncomment it to show seq field again
+                    LAST_SEQ, // and comment this
                     lengthSelected);
 
 
@@ -273,7 +277,6 @@ public class AddItemFragment extends Fragment {
 
                                 itemsArrayList.add(newItem);
 
-//                                Toast.makeText(getActivity(), R.string.item_added_suc, Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override

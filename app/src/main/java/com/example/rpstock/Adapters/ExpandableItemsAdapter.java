@@ -1,18 +1,15 @@
 package com.example.rpstock.Adapters;
 
-import android.opengl.Visibility;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rpstock.Objects.Employee;
@@ -22,8 +19,6 @@ import com.example.rpstock.R;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
-
-import static com.google.firebase.database.FirebaseDatabase.getInstance;
 
 public class ExpandableItemsAdapter extends RecyclerView.Adapter<ExpandableItemsAdapter.MyViewHolder> {
 
@@ -104,8 +99,6 @@ public class ExpandableItemsAdapter extends RecyclerView.Adapter<ExpandableItems
                     }
                 }
             });
-
-
         }
 
         private void getListOfItemsFromEmployee(Employee employee, String headerName) {
@@ -117,24 +110,35 @@ public class ExpandableItemsAdapter extends RecyclerView.Adapter<ExpandableItems
                     item.setID(entry.getKey());
                     item.setKind(entry.getValue().getKind());
                     item.setDiameter(entry.getValue().getDiameter());
+                    item.setNippleLength(entry.getValue().getNippleLength());
+                    item.setSeq(entry.getValue().getSeq());
                     items.add(item);
                 }
             }
-//            sortArrayBySeq();
+            sortArrayBySeq();
         }
 
-//        private void sortArrayBySeq() {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                items.sort(new Comparator<Item>() {
-//                    @Override
-//                    public int compare(Item o1, Item o2) {
-//                        Integer x1 = o1.getSeq();
-//                        Integer x2 = o2.getSeq();
-//                        return x1.compareTo(x2);
-//                    }
-//                });
-//            }
-//        }
+        private void sortArrayBySeq() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                items.sort(new Comparator<Item>() {
+                    @Override
+                    public int compare(Item o1, Item o2) {
+
+                        String x1 = o1.getKind();
+                        String x2 = o2.getKind();
+                        int sComp = x1.compareTo(x2);
+
+                        if (sComp != 0) {
+                            return sComp;
+                        }
+
+                        Integer x3 = o1.getSeq();
+                        Integer x4 = o2.getSeq();
+                        return x3.compareTo(x4);
+                    }
+                });
+            }
+        }
 
         private void inflateEmployeesList() {
             allItemsRecycler.setHasFixedSize(true);

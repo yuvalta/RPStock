@@ -35,6 +35,7 @@ public class AdminMainFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String REFERENCE_EMPLOYEE_ID = "0101";
 
     private String mParam1;
     private String mParam2;
@@ -92,7 +93,9 @@ public class AdminMainFragment extends Fragment {
                     for (DataSnapshot ds1 : ds.getChildren()) {
                         Employee e = ds1.getValue(Employee.class);
 
-                        employees.add(e);
+                        if (!e.getID().equals(REFERENCE_EMPLOYEE_ID)) { // insert all users accept items reference user
+                            employees.add(e);
+                        }
                     }
                 }
                 inflateEmployeesList();

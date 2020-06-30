@@ -58,7 +58,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
         public void bind(final Item item, final ArrayList<String> employeeList) {
 
             itemName.setText(item.getName());
-            itemKind.setText(item.getKind());
+            String nippleLength = item.getNippleLength();
+
+            if (nippleLength.equals("ללא")) {
+                itemKind.setText(item.getKind());
+            } else {
+                itemKind.setText(nippleLength);
+            }
+
             itemDiameter.setText(item.getDiameter());
             itemSeq.setText(String.valueOf(item.getSeq()));
 
@@ -73,7 +80,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
                                 }
                             })
                             .setNegativeButton("בטל מחיקה", null)
-                            .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
 
                 }

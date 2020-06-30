@@ -68,19 +68,19 @@ public class AdminMainAdapter extends RecyclerView.Adapter<AdminMainAdapter.MyVi
 
         }
 
-        public void bind(final Employee item, final int position) {
+        public void bind(final Employee employee, final int position) {
 
-            name.setText(item.getName());
-            email.setText(getIDFromEmail(item.getEmail()));
-            password.setText(item.getPassword());
-            phone.setText(item.getPhone());
+            name.setText(employee.getName());
+            email.setText(getIDFromEmail(employee.getEmail()));
+            password.setText(employee.getPassword());
+            phone.setText(employee.getPhone());
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
 
                     AppCompatActivity activity = (AppCompatActivity) itemView.getContext();
-                    Fragment myFragment = new ItemsListFragment(item, true);
+                    Fragment myFragment = new ItemsListFragment(employee, true);
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, myFragment)
                             .addToBackStack(null).commit();
 

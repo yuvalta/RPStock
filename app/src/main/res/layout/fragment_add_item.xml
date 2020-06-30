@@ -24,7 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter SEQ"
-        android:id="@+id/item_seq"/>
+        android:id="@+id/item_seq"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:textDirection="rtl"

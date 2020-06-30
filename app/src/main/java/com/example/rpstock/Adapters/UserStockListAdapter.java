@@ -87,10 +87,15 @@ public class UserStockListAdapter extends RecyclerView.Adapter<UserStockListAdap
 
         public void bind(final Item item, final int position) {
             diameter = itemView.findViewById(R.id.diameter_in_item);
-            diameter.setText(item.getDiameter()+"\"");
+            diameter.setText(item.getDiameter());
 
             kind = itemView.findViewById(R.id.kind_in_item);
-            kind.setText(item.getKind());
+            String nippleLength = item.getNippleLength();
+            if (nippleLength.equals("ללא") || nippleLength == null) {
+                kind.setText(item.getKind());
+            } else {
+                kind.setText(nippleLength);
+            }
 
             itemName = itemView.findViewById(R.id.name_of_item);
             itemName.setText(item.getName());
@@ -101,17 +106,7 @@ public class UserStockListAdapter extends RecyclerView.Adapter<UserStockListAdap
             increaseAmount = itemView.findViewById(R.id.increase_amount);
             decreaseAmount = itemView.findViewById(R.id.decrease_amount);
 
-            if (innerIsAdmin) {
-                increaseAmount.setVisibility(View.VISIBLE);
-                decreaseAmount.setClickable(true);
-                amountOfItem.setClickable(true);
-                amountOfItem.setEnabled(true);
-            } else {
-                increaseAmount.setVisibility(View.GONE);
-                decreaseAmount.setClickable(false);
-                amountOfItem.setClickable(false);
-                amountOfItem.setEnabled(false);
-            }
+            changeUItoUserOrAdmin(innerIsAdmin);
 
             increaseAmount.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -136,6 +131,13 @@ public class UserStockListAdapter extends RecyclerView.Adapter<UserStockListAdap
                 }
             });
 
+        }
+
+        private void changeUItoUserOrAdmin(boolean innerIsAdmin) {
+            increaseAmount.setVisibility(innerIsAdmin ? View.VISIBLE : View.GONE);
+            decreaseAmount.setClickable(innerIsAdmin);
+            amountOfItem.setClickable(innerIsAdmin);
+            amountOfItem.setEnabled(innerIsAdmin);
         }
 
         private void setNumberPicker(int amount) {

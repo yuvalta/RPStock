@@ -28,12 +28,11 @@ import static com.google.firebase.database.FirebaseDatabase.getInstance;
 
 public class AllUserStockListAdapter extends RecyclerView.Adapter<AllUserStockListAdapter.MyViewHolder> {
 
+    private static int MIN_VALUE_ALERT = 5;
     ArrayList<Item> listItems = new ArrayList<Item>();
     public TextView name, kind, diameter, amountOfItem;
-    private static int MIN_VALUE_ALERT = 5;
 
     public AllUserStockListAdapter(ArrayList<Item> itemArrayList) {
-        Collections.reverse(itemArrayList);
         listItems = itemArrayList;
     }
 

@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyViewHolder> {
+
     private ArrayList<Employee> mDataset;
     private AdapterView.OnItemClickListener listener;
 
@@ -44,11 +45,6 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
             password = view.findViewById(R.id.item_kind);
             phone = view.findViewById(R.id.item_amount);
             options = view.findViewById(R.id.item_options);
-        }
-
-        public String getIDFromEmail(String number) {
-            int index = number.indexOf('@');
-            return number.substring(0, index);
         }
     }
 
@@ -79,47 +75,46 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
         password.setText(mDataset.get(position).getPassword());
         phone.setText(mDataset.get(position).getPhone());
 
-        if (position != 0) { // user can't delete first employee because i use it to get list of items
-            options.setVisibility(View.VISIBLE);
-            options.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PopupMenu popup = new PopupMenu(holder.itemView.getContext(), options);
-                    popup.inflate(R.menu.employees_item_menu);
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem menuItem) {
-                            switch (menuItem.getItemId()) {
-                                case R.id.menu_delete:
-                                    FirebaseDatabase.getInstance().getReference()
-                                            .child("users").child(mDataset.get(position).getID()).removeValue()
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    removeUser(holder, position);
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(holder.itemView.getContext(), "Failed!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                    return true;
-                                case R.id.menu_update:
-                                    UserInfoDialog dialog = new UserInfoDialog(holder.itemView.getContext(), mDataset.get(position));
-                                    dialog.show();
 
-                                    return true;
-                                default:
-                                    return false;
-                            }
+        options.setVisibility(View.VISIBLE);
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(holder.itemView.getContext(), options);
+                popup.inflate(R.menu.employees_item_menu);
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.menu_delete:
+                                FirebaseDatabase.getInstance().getReference()
+                                        .child("users").child(mDataset.get(position).getID()).removeValue()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                removeUser(holder, position);
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(holder.itemView.getContext(), "Failed!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                return true;
+                            case R.id.menu_update:
+                                UserInfoDialog dialog = new UserInfoDialog(holder.itemView.getContext(), mDataset.get(position));
+                                dialog.show();
+
+                                return true;
+                            default:
+                                return false;
                         }
-                    });
-                    popup.show();
-                }
-            });
+                    }
+                });
+                popup.show();
+            }
+        });
 
-        }
     }
 
     private void removeUser(MyViewHolder holder, int position) {

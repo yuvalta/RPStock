@@ -101,13 +101,22 @@ public class ItemsListFragment extends Fragment {
             item.setID(entry.getKey());
             item.setKind(entry.getValue().getKind());
             item.setDiameter(entry.getValue().getDiameter());
+            item.setSeq(entry.getValue().getSeq());
+            item.setNippleLength(entry.getValue().getNippleLength());
             items.add(item);
 
-            if (!itemsHeader.contains(entry.getValue().getName())) {
-                itemsHeader.add(entry.getValue().getName());
-            }
         }
         sortArrayBySeq();
+        makeDistinct();
+    }
+
+    private void makeDistinct() {
+
+        for (Item i : items) {
+            if (!itemsHeader.contains(i.getName())) {
+                itemsHeader.add(i.getName());
+            }
+        }
     }
 
     private void sortArrayBySeq() {
@@ -115,10 +124,10 @@ public class ItemsListFragment extends Fragment {
             items.sort(new Comparator<Item>() {
                 @Override
                 public int compare(Item o1, Item o2) {
-                    Integer x1 = o1.getSeq();
-                    Integer x2 = o2.getSeq();
-                    Log.d("comapre", x1 + " " + x2);
-                    return x1.compareTo(x2);
+
+                    Integer x3 = o1.getSeq();
+                    Integer x4 = o2.getSeq();
+                    return x3.compareTo(x4);
                 }
             });
         }

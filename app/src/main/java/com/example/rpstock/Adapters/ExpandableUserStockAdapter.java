@@ -122,7 +122,6 @@ public class ExpandableUserStockAdapter extends RecyclerView.Adapter<ExpandableU
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         Item e = ds.getValue(Item.class);
                         items.add(e);
-
                     }
                     sortArrayBySeq();
                     inflateEmployeesList();
@@ -143,8 +142,7 @@ public class ExpandableUserStockAdapter extends RecyclerView.Adapter<ExpandableU
                     public int compare(Item o1, Item o2) {
                         Integer x1 = o1.getSeq();
                         Integer x2 = o2.getSeq();
-                        Log.d("comapre", x1 + " " + x2);
-                        return x2.compareTo(x1);
+                        return x1.compareTo(x2);
                     }
                 });
             }
