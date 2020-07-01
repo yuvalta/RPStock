@@ -79,4 +79,28 @@ public class Item {
     public void setNippleLength(String nippleLength) {
         this.nippleLength = nippleLength;
     }
+
+    public static Double convertDiameter(String strDiameter) {
+        switch (strDiameter) {
+            case "3/4\"":
+                return 0.75;
+            case "1\"":
+                return 1.0;
+            case "1.25\"":
+                return 1.25;
+            case "1.5\"":
+                return 1.5;
+            case "2\"":
+                return 2.0;
+            default:
+                return 0.0;
+        }
+    }
+
+    public static Integer convertLength(String nippleLength) {
+        if (!nippleLength.equals("ללא")) {
+            return Integer.valueOf(nippleLength);
+        }
+        return 0;
+    }
 }

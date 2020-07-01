@@ -85,7 +85,7 @@ public class AllStockFragment extends Fragment {
                     for (DataSnapshot ds1 : ds.getChildren()) {
                         Employee e = ds1.getValue(Employee.class);
 
-                        if (!e.getID().equals(REFERENCE_EMPLOYEE_ID)) { // insert all users accept items reference user
+                        if (!e.getID().equals(REFERENCE_EMPLOYEE_ID) && !e.getName().equals("Admin")) { // insert all users accept items reference user and admin
                             employees.add(e);
                         }
                     }

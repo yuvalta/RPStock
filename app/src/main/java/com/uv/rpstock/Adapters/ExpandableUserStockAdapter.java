@@ -28,7 +28,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ExpandableUserStockAdapter extends RecyclerView.Adapter<ExpandableUserStockAdapter.MyViewHolder> {
 
@@ -136,15 +139,13 @@ public class ExpandableUserStockAdapter extends RecyclerView.Adapter<ExpandableU
 
         private void sortArrayBySeq() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Comparator<Item> comparator = Comparator.comparing(Item::getSeq);
+                comparator = comparator.thenComparing((Item strDiameter) -> Item.convertDiameter(strDiameter.getDiameter()));
+                comparator = comparator.thenComparing((Item nippleLength) -> Item.convertLength(nippleLength.getNippleLength()));
 
-                items.sort(new Comparator<Item>() {
-                    @Override
-                    public int compare(Item o1, Item o2) {
-                        Integer x1 = o1.getSeq();
-                        Integer x2 = o2.getSeq();
-                        return x1.compareTo(x2);
-                    }
-                });
+                Stream<Item> personStream = items.stream().sorted(comparator);
+
+                items = (ArrayList<Item>) personStream.collect(Collectors.toList());
             }
         }
 

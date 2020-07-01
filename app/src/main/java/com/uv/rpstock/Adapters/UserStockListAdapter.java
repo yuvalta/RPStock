@@ -31,7 +31,6 @@ public class UserStockListAdapter extends RecyclerView.Adapter<UserStockListAdap
     private boolean isAdmin;
 
     public UserStockListAdapter(ArrayList<Item> itemArrayList, Employee _employee, boolean _isAdmin) {
-        Collections.reverse(itemArrayList);
         listItems = itemArrayList;
         employee = _employee;
         isAdmin = _isAdmin;

@@ -19,6 +19,8 @@ import com.example.rpstock.R;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ExpandableItemsAdapter extends RecyclerView.Adapter<ExpandableItemsAdapter.MyViewHolder> {
 
@@ -120,23 +122,13 @@ public class ExpandableItemsAdapter extends RecyclerView.Adapter<ExpandableItems
 
         private void sortArrayBySeq() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                items.sort(new Comparator<Item>() {
-                    @Override
-                    public int compare(Item o1, Item o2) {
+                Comparator<Item> comparator = Comparator.comparing(Item::getSeq);
+                comparator = comparator.thenComparing((Item strDiameter) -> Item.convertDiameter(strDiameter.getDiameter()));
+                comparator = comparator.thenComparing((Item nippleLength) -> Item.convertLength(nippleLength.getNippleLength()));
 
-                        String x1 = o1.getKind();
-                        String x2 = o2.getKind();
-                        int sComp = x1.compareTo(x2);
+                Stream<Item> personStream = items.stream().sorted(comparator);
 
-                        if (sComp != 0) {
-                            return sComp;
-                        }
-
-                        Integer x3 = o1.getSeq();
-                        Integer x4 = o2.getSeq();
-                        return x3.compareTo(x4);
-                    }
-                });
+                items = (ArrayList<Item>) personStream.collect(Collectors.toList());
             }
         }
 

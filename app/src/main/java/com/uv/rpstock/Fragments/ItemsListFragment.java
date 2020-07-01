@@ -32,6 +32,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ItemsListFragment extends Fragment {
 
@@ -106,7 +108,7 @@ public class ItemsListFragment extends Fragment {
             items.add(item);
 
         }
-        sortArrayBySeq();
+        sortHeaderArrayBySeq();
         makeDistinct();
     }
 
@@ -119,17 +121,15 @@ public class ItemsListFragment extends Fragment {
         }
     }
 
-    private void sortArrayBySeq() {
+    private void sortHeaderArrayBySeq() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            items.sort(new Comparator<Item>() {
-                @Override
-                public int compare(Item o1, Item o2) {
+            Comparator<Item> comparator = Comparator.comparing(Item::getSeq);
+            comparator = comparator.thenComparing((Item strDiameter) -> Item.convertDiameter(strDiameter.getDiameter()));
+            comparator = comparator.thenComparing((Item nippleLength) -> Item.convertLength(nippleLength.getNippleLength()));
 
-                    Integer x3 = o1.getSeq();
-                    Integer x4 = o2.getSeq();
-                    return x3.compareTo(x4);
-                }
-            });
+            Stream<Item> personStream = items.stream().sorted(comparator);
+
+            items = (ArrayList<Item>) personStream.collect(Collectors.toList());
         }
     }
 
