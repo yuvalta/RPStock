@@ -1,4 +1,4 @@
-package com.example.rpstock.Objects;
+package com.uv.rpstock.Objects;
 
 public class Item {
 

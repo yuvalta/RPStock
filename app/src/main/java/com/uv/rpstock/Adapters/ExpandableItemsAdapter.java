@@ -1,4 +1,4 @@
-package com.example.rpstock.Adapters;
+package com.uv.rpstock.Adapters;
 
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -12,9 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.rpstock.Objects.Employee;
-import com.example.rpstock.Objects.Item;
-import com.example.rpstock.R;
+import com.uv.rpstock.Objects.Employee;
+import com.uv.rpstock.Objects.Item;
+import com.uv.rpstock.R;
 
 import java.util.ArrayList;
 import java.util.Comparator;

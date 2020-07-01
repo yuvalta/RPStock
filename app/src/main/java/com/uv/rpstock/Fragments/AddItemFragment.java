@@ -1,4 +1,4 @@
-package com.example.rpstock.Fragments;
+package com.uv.rpstock.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,10 +22,10 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.rpstock.Adapters.ItemsAdapter;
-import com.example.rpstock.Objects.Employee;
-import com.example.rpstock.Objects.Item;
-import com.example.rpstock.R;
+import com.uv.rpstock.Adapters.ItemsAdapter;
+import com.uv.rpstock.Objects.Employee;
+import com.uv.rpstock.Objects.Item;
+import com.uv.rpstock.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -39,7 +38,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package com.example.rpstock.Activities;
+package com.uv.rpstock.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import com.example.rpstock.R;
+import com.uv.rpstock.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -22,9 +22,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.rpstock">
+    package="com.uv.rpstock">
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name="com.uv.rpstock.Activities.LoginActivity"
             android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.MainActivity"
+            android:name="com.uv.rpstock.Activities.MainActivity"
             android:screenOrientation="nosensor">
         </activity>
     </application>

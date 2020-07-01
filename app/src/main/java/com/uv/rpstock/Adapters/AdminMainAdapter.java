@@ -1,4 +1,4 @@
-package com.example.rpstock.Adapters;
+package com.uv.rpstock.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.rpstock.Fragments.ItemsListFragment;
-import com.example.rpstock.Objects.Employee;
-import com.example.rpstock.R;
+import com.uv.rpstock.Fragments.ItemsListFragment;
+import com.uv.rpstock.Objects.Employee;
+import com.uv.rpstock.R;
 
 import java.util.ArrayList;
 

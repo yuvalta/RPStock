@@ -1,4 +1,4 @@
-package com.example.rpstock;
+package com.uv.rpstock;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.rpstock", appContext.getPackageName());
+        assertEquals("com.uv.rpstock", appContext.getPackageName());
     }
 }

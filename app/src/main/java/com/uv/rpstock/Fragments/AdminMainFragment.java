@@ -1,11 +1,9 @@
-package com.example.rpstock.Fragments;
+package com.uv.rpstock.Fragments;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,10 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.rpstock.Adapters.AdminMainAdapter;
-import com.example.rpstock.Adapters.EmployeesAdapter;
-import com.example.rpstock.Objects.Employee;
-import com.example.rpstock.R;
+import com.uv.rpstock.Adapters.AdminMainAdapter;
+import com.uv.rpstock.Objects.Employee;
+import com.uv.rpstock.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

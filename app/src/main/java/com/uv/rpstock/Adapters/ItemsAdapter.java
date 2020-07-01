@@ -1,4 +1,4 @@
-package com.example.rpstock.Adapters;
+package com.uv.rpstock.Adapters;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,11 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.StyleRes;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.rpstock.Objects.Item;
-import com.example.rpstock.R;
+import com.uv.rpstock.Objects.Item;
+import com.uv.rpstock.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;

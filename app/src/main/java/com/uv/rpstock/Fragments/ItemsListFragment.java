@@ -1,33 +1,22 @@
-package com.example.rpstock.Fragments;
+package com.uv.rpstock.Fragments;
 
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.rpstock.Adapters.AdminMainAdapter;
-import com.example.rpstock.Adapters.ExpandableItemsAdapter;
-import com.example.rpstock.Adapters.UserStockListAdapter;
-import com.example.rpstock.Objects.Employee;
-import com.example.rpstock.Objects.Item;
-import com.example.rpstock.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.uv.rpstock.Adapters.ExpandableItemsAdapter;
+import com.uv.rpstock.Objects.Employee;
+import com.uv.rpstock.Objects.Item;
+import com.uv.rpstock.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Comparator;

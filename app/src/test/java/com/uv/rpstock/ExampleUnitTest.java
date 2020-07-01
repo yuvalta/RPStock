@@ -1,4 +1,4 @@
-package com.example.rpstock;
+package com.uv.rpstock;
 
 import org.junit.Test;
 

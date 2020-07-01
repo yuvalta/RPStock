@@ -1,4 +1,4 @@
-package com.example.rpstock;
+package com.uv.rpstock;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -9,25 +9,19 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.rpstock.Activities.MainActivity;
-import com.example.rpstock.Objects.Employee;
+import com.uv.rpstock.Objects.Employee;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class UserInfoDialog extends Dialog {
 
