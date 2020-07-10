@@ -157,10 +157,11 @@ public class ExpandableUserStockAdapter extends RecyclerView.Adapter<ExpandableU
                     DividerItemDecoration.VERTICAL);
             allItemsRecycler.addItemDecoration(dividerItemDecoration);
 
-            if (mAdapter == null) {
-                mAdapter = new AllUserStockListAdapter(items);
+//            if (mAdapter == null) {
+//            }
+            mAdapter = null;
+            mAdapter = new AllUserStockListAdapter(items);
 
-            }
             allItemsRecycler.setAdapter(mAdapter);
             progressBar.setVisibility(View.GONE);
         }
